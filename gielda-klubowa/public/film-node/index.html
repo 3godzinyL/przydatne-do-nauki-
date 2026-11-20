@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dlaczego serwer w Node.js — film</title>
+<link rel="stylesheet" href="../film/film.css">
+<style>
+/* 1 · co robi serwer */
+.chain4 { display: flex; flex-direction: column; align-items: center; gap: 56px; }
+.chain4 .row4 { display: flex; align-items: center; }
+.chain4 .blk { width: 300px; height: 230px; }
+.chain4 .flowline { width: 90px; margin: 0 6px; }
+.chain4 .blk.main { border-color: var(--gold); }
+.chain4 .blk .mono { font-size: 21px; color: var(--gold); }
+.cpu { width: 1500px; }
+.cpu .lb { display: flex; justify-content: space-between; font-size: 25px; color: var(--ink-3); margin-bottom: 12px; }
+.cpu .lb b { color: var(--gold); font-weight: 600; }
+.track { position: relative; height: 54px; border-radius: 8px; background: #1b1810; overflow: hidden; display: flex; }
+.track .seg { height: 100%; transform-origin: left; transform: scaleX(0); }
+.scene.on .track .seg { animation: fill var(--len, 1s) ease-out both; animation-delay: calc(var(--d, 0) * var(--T) * 1s); }
+@keyframes fill { to { transform: scaleX(1); } }
+.seg.wait { background: repeating-linear-gradient(-45deg, #3a3220 0 12px, #241f14 12px 24px); }
+.seg.work { background: var(--gold); }
+
+/* 2 · pomiar */
+.meas { width: 1560px; display: flex; flex-direction: column; gap: 30px; }
+.mrow { display: grid; grid-template-columns: 230px 1fr 290px; align-items: center; gap: 26px; }
+.mrow .who { display: flex; align-items: center; gap: 14px; font-size: 32px; font-weight: 800; }
+.mrow .who img { width: 46px; height: 46px; }
+.mrow .sum { font: 600 30px var(--mono); color: var(--ink-2); text-align: right; white-space: nowrap; }
+.mrow .track { height: 74px; }
+.mrow .seg.wait { width: 99.4%; position: relative; }
+.mrow .seg.work { width: .6%; min-width: 9px; }
+.mrow .seg.work.r { min-width: 4px; width: .25%; background: var(--rust); }
+.seg .in { position: absolute; left: 26px; top: 50%; transform: translateY(-50%); font-size: 26px; color: var(--ink-2); white-space: nowrap; }
+.tick-lbl { display: grid; grid-template-columns: 230px 1fr 290px; gap: 26px; margin-top: -18px; }
+.tick-lbl span { text-align: right; font: 22px var(--mono); color: var(--gold); padding-right: 2px; }
+.verdict { margin-top: 18px; display: flex; align-items: baseline; gap: 26px; font-size: 34px; color: var(--ink-2); }
+.verdict b { font-size: 64px; color: var(--gold); font-weight: 800; }
+.src { font-size: 20px; color: var(--ink-3); }
+
+/* terminale (3, 4, 5) */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; align-items: start; }
+.term { overflow: hidden; }
+.term .tb { display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-bottom: 1px solid var(--line); font-size: 24px; color: var(--ink-2); }
+.term .tb img { width: 34px; height: 34px; }
+.term .tb b { color: var(--ink); }
+.term .tb .tag { margin-left: auto; font-size: 20px; color: var(--ink-3); }
+.term .tl { padding: 20px 26px 26px; font: 25px/1.75 var(--mono); color: var(--ink-2); min-height: 330px; }
+.term .tl div { white-space: nowrap; }
+.t-p { color: var(--gold); }
+.t-err { color: var(--down); }
+.t-ok { color: var(--up); }
+.t-dim { color: var(--ink-3); }
+.term.bad { border-color: rgba(229,83,75,.45); }
+.term.good { border-color: var(--gold); }
+.meter { margin: 0 26px 24px; }
+.meter .ml { display: flex; justify-content: space-between; font-size: 21px; color: var(--ink-3); margin-bottom: 8px; }
+.meter .mt { height: 14px; border-radius: 7px; background: #1b1810; overflow: hidden; }
+.meter .mt i { display: block; height: 100%; width: var(--w); background: var(--gold); transform-origin: left; transform: scaleX(0); }
+.scene.on .meter .mt i { animation: fill calc(var(--T) * var(--len, .6) * 1s) linear both; animation-delay: calc(var(--d, 0) * var(--T) * 1s); }
+.meter.hot .mt i { background: var(--rust); }
+
+/* 4 · kompilator nie sprawdzi zapytań */
+.chk { padding: 22px 26px 26px; display: flex; flex-direction: column; gap: 16px; }
+.chk .ok { font-size: 30px; color: var(--up); font-weight: 700; }
+.chk .q { display: grid; grid-template-columns: 54px 1fr; align-items: center; gap: 16px; font-size: 27px; color: var(--ink-2); padding: 14px 0; border-top: 1px solid #241f14; }
+.chk .q i { font-style: normal; width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--down); color: var(--down); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 28px; }
+.chk .q code { font: 24px var(--mono); color: var(--gold); }
+.note-line { grid-column: 1 / -1; text-align: center; font-size: 34px; font-weight: 800; margin-top: 6px; }
+
+/* 6 · każdy język na swoim miejscu */
+.split { display: grid; grid-template-columns: 1fr 170px 1fr; align-items: center; width: 100%; }
+.side-box { padding: 28px 32px; }
+.side-box .hd { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+.side-box .hd img { width: 52px; height: 52px; }
+.side-box .row { display: flex; align-items: baseline; gap: 16px; font-size: 27px; padding: 10px 0; border-top: 1px solid #241f14; color: var(--ink-2); }
+.side-box .row i { font-style: normal; font-weight: 800; width: 24px; color: var(--up); }
+.side-box svg { display: block; width: 100%; height: 160px; margin: 4px 0 10px; }
+.split .mid { text-align: center; font: 600 21px var(--mono); color: var(--gold); }
+.split .mid .flowline { margin: 12px 14px 0; }
+.endline { margin-top: 34px; text-align: center; font-size: 38px; font-weight: 800; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- 1 · co robi serwer -->
+<section class="scene">
+  <div class="kick a" style="--d:0">01 · Backend</div>
+  <h2 class="a" style="--d:.02">Serwer <span class="gold">prawie nic nie liczy</span></h2>
+  <div class="body"><div class="chain4">
+    <div class="row4">
+      <div class="blk box a" style="--d:.3"><img class="ic" src="../deck/img/binance.svg" alt=""><b>Binance</b><span>świece z giełdy</span></div>
+      <div class="flowline a" style="--d:.34"></div>
+      <div class="blk box main a" style="--d:.05"><img class="ic" src="../deck/img/nodejs.svg" alt=""><b>Node.js</b><span>nasz serwer</span></div>
+      <div class="flowline a" style="--d:.46"></div>
+      <div class="blk box a" style="--d:.48"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4M9 12h6M9 16h6" /></svg><b>Plik JSON</b><span class="mono">data/BTCUSDT/1h.json</span></div>
+      <div class="flowline a" style="--d:.62"></div>
+      <div class="blk box a" style="--d:.64"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 8h18" /><path d="M7 16v-3M10 16v-5M13 16v-2M16 16v-4" /></svg><b>Przeglądarka</b><span>wykres widza</span></div>
+    </div>
+    <div class="cpu a" style="--d:.74">
+      <div class="lb"><span>czas jednego zapytania</span><span><b>liczenie</b> · reszta to czekanie na sieć</span></div>
+      <div class="track"><div class="seg work" style="--d:.76;width:.6%;min-width:9px"></div><div class="seg wait" style="--d:.77;--len:1.6s;width:99.4%"></div></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 2 · pomiar: czekanie vs liczenie -->
+<section class="scene">
+  <div class="kick a" style="--d:0">02 · Pomiar</div>
+  <h2 class="a" style="--d:.02">Szybszy język <span class="gold">nie skróci czekania</span></h2>
+  <div class="body"><div class="meas">
+    <div class="mrow a" style="--d:.1">
+      <div class="who"><img src="../deck/img/nodejs.svg" alt="">Node.js</div>
+      <div class="track"><div class="seg wait" style="--d:.14;--len:2.4s"><span class="in">czekanie na Binance · 330 ms</span></div><div class="seg work" style="--d:.56"></div></div>
+      <div class="sum a" style="--d:.58">330 + 2 ms</div>
+    </div>
+    <div class="tick-lbl a" style="--d:.6"><i></i><span>↑ liczenie w Node: 2 ms</span><i></i></div>
+    <div class="mrow a" style="--d:.7">
+      <div class="who"><img src="../deck/img/rust.svg" alt="">Rust</div>
+      <div class="track"><div class="seg wait" style="--d:.72;--len:1.4s"><span class="in">czekanie na Binance · 330 ms</span></div><div class="seg work r" style="--d:.8"></div></div>
+      <div class="sum a" style="--d:.82">330 + &lt;2 ms</div>
+    </div>
+    <div class="verdict a" style="--d:.86"><b>≤ 0,6%</b>tyle najwyżej dałby szybszy język</div>
+    <div class="src a" style="--d:.9">zmierzone na tym komputerze: Binance /klines, 1000 świec 1h, mediana z 5 zapytań</div>
+  </div></div>
+</section>
+
+<!-- 3 · Rust kosztuje AI więcej -->
+<section class="scene">
+  <div class="kick a" style="--d:0">03 · Praca AI · typowy przebieg</div>
+  <h2 class="a" style="--d:.02">Rust = <span class="gold">więcej poprawek i tokenów</span></h2>
+  <div class="body"><div class="two">
+    <div class="term box bad a" style="--d:.08">
+      <div class="tb"><img src="../deck/img/rust.svg" alt=""><b>Serwer w Rust</b><span class="tag">AI pisze i kompiluje</span></div>
+      <div class="tl">
+        <div class="a" style="--d:.18"><span class="t-p">&gt;</span> cargo build</div>
+        <div class="a t-dim" style="--d:.24">Compiling tokio, hyper, serde…</div>
+        <div class="a t-err" style="--d:.34">error[E0382]: borrow of moved value</div>
+        <div class="a" style="--d:.46"><span class="t-p">&gt;</span> poprawka 1 · cargo build</div>
+        <div class="a t-err" style="--d:.54">error[E0308]: mismatched types</div>
+        <div class="a" style="--d:.64"><span class="t-p">&gt;</span> poprawka 2 · cargo build</div>
+        <div class="a t-ok" style="--d:.74">Finished ✓</div>
+      </div>
+      <div class="meter hot a" style="--d:.18"><div class="ml"><span>tokeny i minuty</span><span>dużo</span></div><div class="mt"><i style="--w:100%;--d:.2;--len:.62"></i></div></div>
+    </div>
+    <div class="term box good a" style="--d:.12">
+      <div class="tb"><img src="../deck/img/nodejs.svg" alt=""><b>Serwer w Node.js</b><span class="tag">AI pisze i uruchamia</span></div>
+      <div class="tl">
+        <div class="a" style="--d:.2"><span class="t-p">&gt;</span> node server.js</div>
+        <div class="a t-ok" style="--d:.27">Giełda Klubowa działa ✓</div>
+        <div class="a t-dim" style="--d:.33"># bez kompilacji, start w sekundę</div>
+      </div>
+      <div class="meter a" style="--d:.2"><div class="ml"><span>tokeny i minuty</span><span>mało</span></div><div class="mt"><i style="--w:24%;--d:.22;--len:.12"></i></div></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 4 · kompilator nie sprawdzi zapytań -->
+<section class="scene">
+  <div class="kick a" style="--d:0">04 · Testy</div>
+  <h2 class="a" style="--d:.02">Kompilator <span class="gold">nie sprawdzi zapytań</span></h2>
+  <div class="body"><div class="two">
+    <div class="box a" style="--d:.06">
+      <div class="chk">
+        <div class="ok">kompilator: bez błędów ✓</div>
+        <div class="q a" style="--d:.22"><i>?</i><span>czas w milisekundach?<br><code>startTime=1795183200</code> <span class="t-dim">· to sekundy</span></span></div>
+        <div class="q a" style="--d:.38"><i>?</i><span>przyszedł właściwy interwał?<br><code>interval=1m</code> <span class="t-dim">· a chcieliśmy 1h</span></span></div>
+        <div class="q a" style="--d:.5"><i>!</i><span>to widać dopiero <b class="gold">w odpowiedzi z sieci</b></span></div>
+      </div>
+    </div>
+    <div class="term box good a" style="--d:.62">
+      <div class="tb"><img src="../deck/img/nodejs.svg" alt=""><b>AI sprawdza samo</b><span class="tag">Node.js</span></div>
+      <div class="tl">
+        <div class="a" style="--d:.68"><span class="t-p">&gt;</span> node server.js <span class="t-dim"># restart 1 s</span></div>
+        <div class="a" style="--d:.76"><span class="t-p">&gt;</span> curl /api/candles?interval=1h</div>
+        <div class="a t-ok" style="--d:.84">200 · 1000 świec 1h · ostatnia: teraz ✓</div>
+        <div class="a t-dim" style="--d:.9"># błąd? poprawka i test od razu</div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 5 · a Python? -->
+<section class="scene">
+  <div class="kick a" style="--d:0">05 · A Python?</div>
+  <h2 class="a" style="--d:.02">Python <span class="gold">wysypuje się na bibliotekach</span></h2>
+  <div class="body"><div class="two">
+    <div class="term box bad a" style="--d:.1">
+      <div class="tb"><b>Python</b><span class="tag">komputer kolegi</span></div>
+      <div class="tl">
+        <div class="a" style="--d:.2"><span class="t-p">&gt;</span> pip install -r requirements.txt</div>
+        <div class="a t-err" style="--d:.3">ERROR: ResolutionImpossible</div>
+        <div class="a" style="--d:.4"><span class="t-p">&gt;</span> python server.py</div>
+        <div class="a t-err" style="--d:.46">ModuleNotFoundError: 'websockets'</div>
+        <div class="a t-dim" style="--d:.56"># inna wersja Pythona? venv? …</div>
+      </div>
+    </div>
+    <div class="term box good a" style="--d:.66">
+      <div class="tb"><img src="../deck/img/nodejs.svg" alt=""><b>Node.js</b><span class="tag">komputer kolegi</span></div>
+      <div class="tl">
+        <div class="a" style="--d:.72"><span class="t-p">&gt;</span> npm install</div>
+        <div class="a t-ok" style="--d:.78">gotowe ✓</div>
+        <div class="a" style="--d:.84"><span class="t-p">&gt;</span> npm start</div>
+        <div class="a t-ok" style="--d:.88">Giełda Klubowa działa ✓</div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 6 · każdy język na swoim miejscu -->
+<section class="scene">
+  <div class="kick a" style="--d:0">06 · Podsumowanie</div>
+  <h2 class="a" style="--d:.02">Każdy język <span class="gold">tam, gdzie daje najwięcej</span></h2>
+  <div class="body"><div>
+    <div class="split">
+      <div class="side-box box a" style="--d:.04">
+        <div class="hd"><img src="../deck/img/nodejs.svg" alt="">Serwer · Node.js</div>
+        <div class="row a" style="--d:.12"><i>✓</i>czeka na sieć i dysk</div>
+        <div class="row a" style="--d:.2"><i>✓</i>AI pisze szybko i tanio w tokenach</div>
+        <div class="row a" style="--d:.28"><i>✓</i>test przez API w sekundę</div>
+      </div>
+      <div class="mid a" style="--d:.38">świece JSON<div class="flowline"></div></div>
+      <div class="side-box box a" style="--d:.44">
+        <div class="hd"><img src="../deck/img/rust.svg" alt="">Przeglądarka · Rust → WASM</div>
+        <svg data-candles="90,5" viewBox="0 0 700 160" preserveAspectRatio="none"></svg>
+        <div class="row a" style="--d:.6"><i>✓</i>tysiące świec w każdej klatce</div>
+        <div class="row a" style="--d:.7"><i>✓</i>wskaźniki liczone u widza</div>
+      </div>
+    </div>
+    <div class="endline a" style="--d:.84">serwer: <span class="gold">Node.js</span> · liczenie i rysowanie: <span class="gold">Rust w przeglądarce</span></div>
+  </div></div>
+</section>
+
+<div class="cap" id="cap"></div>
+<div class="ctl">
+  <button id="play" title="Odtwórz / pauza (spacja)">▶</button>
+  <span class="nm" id="nm"></span>
+  <div class="chap" id="chap"></div>
+  <span class="tm" id="tm">0:00 / 0:00</span>
+</div>
+<div class="cover" id="cover"><div class="pl"></div><h1>Dlaczego serwer <span class="gold">w Node.js</span></h1><p>film z lektorem · ok. 1:21 · kliknij, aby odtworzyć</p></div>
+</div>
+
+<script src="../film/player.js"></script>
+</body>
+</html>

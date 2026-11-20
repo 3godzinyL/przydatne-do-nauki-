@@ -1,0 +1,14 @@
+{
+  "name": "chart-gl",
+  "type": "module",
+  "description": "Giełda Klubowa: świece i wolumen rysowane w WebGL2 (Rust -> WebAssembly)",
+  "version": "0.1.0",
+  "files": [
+    "chart_gl_bg.wasm",
+    "chart_gl.js"
+  ],
+  "main": "chart_gl.js",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

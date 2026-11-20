@@ -1,0 +1,50 @@
+[
+  {
+    "id": "s1",
+    "title": "Jak to działa",
+    "cap": "Jak działa nasza platforma? Cztery klocki: Binance daje świece, serwer w Node.js je zapisuje, gotowa biblioteka obsługuje wykres, a Rust rysuje świece na karcie graficznej.",
+    "say": "Jak działa nasza platforma? Cztery klocki. Bajnens daje świece, serwer w Nołd dżej es je zapisuje, gotowa biblioteka obsługuje wykres, a Rast rysuje świece na karcie graficznej."
+  },
+  {
+    "id": "s2",
+    "title": "Node.js i pliki JSON",
+    "cap": "Serwer w Node.js pyta Binance o świece — po tysiąc naraz. Każdy interwał trafia do osobnego pliku JSON. Przy kolejnym otwarciu serwer dociąga już tylko brakujące świece.",
+    "say": "Serwer w Nołd dżej es pyta Bajnens o świece, po tysiąc naraz. Każdy interwał trafia do osobnego pliku dżejson. Przy kolejnym otwarciu serwer dociąga już tylko brakujące świece."
+  },
+  {
+    "id": "s3",
+    "title": "Jedna świeca = 6 liczb",
+    "cap": "Jedna świeca to sześć liczb: czas, otwarcie, maksimum, minimum, zamknięcie i wolumen. Bez nazw pól, więc tysiąc świec waży tylko około 60 kilobajtów.",
+    "say": "Jedna świeca to sześć liczb: czas, otwarcie, maksimum, minimum, zamknięcie i wolumen. Bez nazw pól, więc tysiąc świec waży tylko około sześćdziesięciu kilobajtów."
+  },
+  {
+    "id": "s4",
+    "title": "Gotowa biblioteka",
+    "cap": "W przeglądarce gotowa biblioteka Lightweight Charts robi to, co najtrudniejsze: przesuwanie, przybliżanie, skale i krzyżyk. Dzięki temu wykres działał od pierwszego uruchomienia.",
+    "say": "W przeglądarce gotowa biblioteka Lajtłejt Czarts robi to, co najtrudniejsze: przesuwanie, przybliżanie, skale i krzyżyk. Dzięki temu wykres działał od pierwszego uruchomienia."
+  },
+  {
+    "id": "s5",
+    "title": "Rust → WebAssembly",
+    "cap": "Świece rysuje nasz kod w Rust. Kompilator zamienia go w WebAssembly — mały plik, 56 kilobajtów, który przeglądarka uruchamia prawie tak szybko jak zwykły program.",
+    "say": "Świece rysuje nasz kod w Rast. Kompilator zamienia go w łeb asembli. To mały plik, pięćdziesiąt sześć kilobajtów, który przeglądarka uruchamia prawie tak szybko jak zwykły program."
+  },
+  {
+    "id": "s6",
+    "title": "WebGL2 = karta graficzna",
+    "cap": "WebGL2 daje dostęp do karty graficznej. Wszystkie świece leżą w jej pamięci, a jedno polecenie rysuje naraz wszystkie widoczne — w około jedną dziesiątą milisekundy.",
+    "say": "Łeb dżi el dwa daje dostęp do karty graficznej. Wszystkie świece leżą w jej pamięci, a jedno polecenie rysuje naraz wszystkie widoczne, w około jedną dziesiątą milisekundy."
+  },
+  {
+    "id": "s7",
+    "title": "Dwie warstwy, jedna klatka",
+    "cap": "Dwie warstwy leżą jedna na drugiej. Na dole Rust rysuje świece, na górze biblioteka rysuje osie i krzyżyk. W każdej klatce biblioteka mówi Rustowi, gdzie jest każda świeca — dlatego nic się nie rozjeżdża.",
+    "say": "Dwie warstwy leżą jedna na drugiej. Na dole Rast rysuje świece, na górze biblioteka rysuje osie i krzyżyk. W każdej klatce biblioteka mówi Rastowi, gdzie jest każda świeca. Dlatego nic się nie rozjeżdża."
+  },
+  {
+    "id": "s8",
+    "title": "Na żywo + podsumowanie",
+    "cap": "Na żywo świece przychodzą przez WebSocket prosto z Binance. Zmienia się tylko ostatnia świeca, więc do karty graficznej wysyłamy jedną świecę zamiast tysięcy. I wszystko to powstało z jednego promptu.",
+    "say": "Na żywo świece przychodzą przez łeb soket prosto z Bajnens. Zmienia się tylko ostatnia świeca, więc do karty graficznej wysyłamy jedną świecę zamiast tysięcy. I wszystko to powstało z jednego promptu."
+  }
+]

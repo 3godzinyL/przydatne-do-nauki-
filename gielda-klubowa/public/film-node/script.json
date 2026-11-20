@@ -1,0 +1,38 @@
+[
+  {
+    "id": "n1",
+    "title": "Co robi nasz serwer",
+    "cap": "Nasz serwer w Node.js prawie nic nie liczy. Pobiera świece z Binance, zapisuje je do pliku JSON i wysyła do przeglądarki. Przez większość czasu po prostu czeka na sieć.",
+    "say": "Nasz serwer w Nołd dżej es prawie nic nie liczy. Pobiera świece z Bajnens, zapisuje je do pliku dżejson i wysyła do przeglądarki. Przez większość czasu po prostu czeka na sieć."
+  },
+  {
+    "id": "n2",
+    "title": "Szybszy język nie skróci czekania",
+    "cap": "Pomiar jednego zapytania: Binance odpowiada po około 330 milisekundach, a Node przerabia tysiąc świec w 2 milisekundy. Rust policzyłby te 2 milisekundy szybciej, ale na sieć czekałby tak samo.",
+    "say": "Pomiar jednego zapytania. Bajnens odpowiada po około trzystu trzydziestu milisekundach, a Nołd przerabia tysiąc świec w dwie milisekundy. Rast policzyłby te dwie milisekundy szybciej, ale na sieć czekałby tak samo."
+  },
+  {
+    "id": "n3",
+    "title": "Rust kosztuje AI więcej",
+    "cap": "Dla AI Rust jest dużo trudniejszy. Surowy kompilator pilnuje typów i pamięci, więc AI częściej poprawia kod i czeka na kompilację. Każda poprawka to kolejne tokeny i minuty.",
+    "say": "Dla AI Rast jest dużo trudniejszy. Surowy kompilator pilnuje typów i pamięci, więc AI częściej poprawia kod i czeka na kompilację. Każda poprawka to kolejne tokeny i minuty."
+  },
+  {
+    "id": "n4",
+    "title": "Kompilator nie sprawdzi zapytań",
+    "cap": "Kompilator nie wie, czy dobrze pytamy giełdę — czy czas jest w milisekundach i czy przyszedł właściwy interwał. To i tak trzeba sprawdzić przez sieć. W Node AI restartuje serwer w sekundę i samo wywołuje API.",
+    "say": "Kompilator nie wie, czy dobrze pytamy giełdę. Czy czas jest w milisekundach i czy przyszedł właściwy interwał. To i tak trzeba sprawdzić przez sieć. W Nołd AI restartuje serwer w sekundę i samo wywołuje ej pi aj."
+  },
+  {
+    "id": "n5",
+    "title": "A Python?",
+    "cap": "Python też by tu zadziałał, ale lubi się wysypać na bibliotekach: na innym komputerze inna wersja i projekt nie rusza. W Node wystarczy npm install.",
+    "say": "Pajton też by tu zadziałał, ale lubi się wysypać na bibliotekach. Na innym komputerze inna wersja i projekt nie rusza. W Nołd wystarczy en pi em instal."
+  },
+  {
+    "id": "n6",
+    "title": "Każdy język na swoim miejscu",
+    "cap": "Dlatego serwer piszemy w Node — szybko i tanio w tokenach. Rust zostaje tam, gdzie naprawdę liczy: w przeglądarce, przy rysowaniu tysięcy świec i wskaźników w każdej klatce.",
+    "say": "Dlatego serwer piszemy w Nołd: szybko i tanio w tokenach. Rast zostaje tam, gdzie naprawdę liczy. W przeglądarce, przy rysowaniu tysięcy świec i wskaźników w każdej klatce."
+  }
+]

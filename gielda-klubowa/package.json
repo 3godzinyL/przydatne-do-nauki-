@@ -1,0 +1,17 @@
+{
+  "name": "gielda-klubowa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Klubowa platforma wykresów: Node.js + Binance + JSON, front Rust/WASM WebGL2 na Lightweight Charts",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build:wasm": "wasm-pack build rust/chart-gl --release --target web --out-dir ../../public/pkg --out-name chart_gl --no-typescript"
+  },
+  "dependencies": {
+    "lightweight-charts": "5.3.0"
+  },
+  "devDependencies": {
+    "node-edge-tts": "^1.2.12"
+  }
+}

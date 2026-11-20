@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI w programowaniu — lekcja 1</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="deck">
+<div class="stage" id="stage">
+
+<!-- 1 · TYTUŁ -->
+<section class="slide title-slide" data-title="Start">
+  <div class="kicker r" style="--i:0">Klub · lekcja 1</div>
+  <h1 class="r" style="--i:1">Jak dobrze zacząć z AI,<br><span class="gold">aby stworzyć<br>funkcjonujący produkt.</span></h1>
+  <div class="goal r" style="--i:2">
+    <div class="lbl">Cel</div>
+    <p>Stworzenie własnej platformy krypto.<br><span>Po drodze uczymy się, <b>czego używać</b> — i <b>jak tego używać</b>.</span></p>
+  </div>
+  <div class="agenda-groups three r" style="--i:3">
+    <div class="ag">
+      <div class="ag-h">Czego używać</div>
+      <ol class="agenda">
+        <li><span>01</span>Którą AI wybrać</li>
+        <li><span>02</span>Narzędzia</li>
+        <li><span>03</span>Technologie</li>
+        <li><span>04</span>Skille</li>
+      </ol>
+    </div>
+    <div class="ag">
+      <div class="ag-h">Jak używać</div>
+      <ol class="agenda">
+        <li><span>05</span>Jak zacząć i zasady</li>
+      </ol>
+    </div>
+    <div class="ag build">
+      <div class="ag-h">Co zbudujemy</div>
+      <ol class="agenda">
+        <li><span>06</span>Platforma krypto</li>
+      </ol>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Przywitanie. Nie trzeba umieć programować — AI pisze kod, my mówimy, co ma powstać, i sprawdzamy wynik.</li>
+    <li>Nie uczymy się „dla sztuki”. Celem jest działający produkt: własna platforma krypto, którą budujemy razem na kolejnych lekcjach.</li>
+    <li>Po drodze uczymy się dwóch rzeczy: czego używać (AI, narzędzia, technologie, skille) i jak tego używać (kto planuje, kto robi, kto poprawia + zasady).</li>
+    <li>Najprościej i wydajnie: bez przepłacania, bez zbędnych programów, bez marnowania limitów.</li>
+  </ul></aside>
+</section>
+
+<!-- 2 · CEL -->
+<section class="slide" data-title="Cel — automatyczna platforma krypto">
+  <div class="kicker r" style="--i:0">Cel</div>
+  <h2 class="r" style="--i:1">Budujemy <span class="gold">automatyczną platformę krypto</span></h2>
+  <div class="learn r" style="--i:2">
+    <span class="lbl">A po drodze uczymy się</span>
+    <span>czego używać</span>
+    <span>jakich narzędzi</span>
+    <span>jakich technologii</span>
+  </div>
+  <div class="goal-main">
+    <div class="pr-app r" style="--i:3">
+      <div class="pr-top">
+        <span class="logo">Privoty</span>
+        <span class="tab">Home</span><span class="tab on">Wykres</span><span class="tab">Pivoty</span><span class="tab">Bookmapa</span><span class="tab">Trading</span><span class="tab">News</span><span class="tab">Deep Test</span><span class="tab">Bot</span>
+      </div>
+      <div class="cv-wrap">
+        <div class="cv-head"><img src="img/coin-btc.svg" alt=""><b>BTCUSDT</b><span>1h</span><span class="cv-live"><i></i><span data-goal-src>dane z giełdy</span></span></div>
+        <canvas class="cv" id="goalChart" aria-label="Świece rysowane od lewej do prawej"></canvas>
+      </div>
+    </div>
+    <div class="have r" style="--i:4">
+      <div class="have-k">Ja już to zrobiłem</div>
+      <div class="have-name">Privoty</div>
+      <div class="have-sub">Samodzielna platforma, która działa — i to na wysokim poziomie.</div>
+      <div class="have-stats">
+        <div><b>100%</b><span>własny wykres</span></div>
+        <div><b>1000+</b><span>symboli w skanerze</span></div>
+        <div><b>3</b><span>giełdy</span></div>
+      </div>
+      <ul class="have-list">
+        <li>News + ocena AI</li>
+        <li>Pivoty i Golden Zone</li>
+        <li>Bookmapa · footprint</li>
+        <li>Deep Test strategii</li>
+        <li>Bot Hyperliquid</li>
+        <li>Alerty na Telegram</li>
+        <li>Replay + PnL na żywo</li>
+        <li>Złote strzały 7D</li>
+        <li>Taśma transakcji MEXC</li>
+        <li>Własne wskaźniki</li>
+      </ul>
+      <a class="have-link" href="https://privoty.pl" target="_blank" rel="noopener">privoty.pl <span>↗</span></a>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Cel klubu: zbudować razem automatyczną platformę krypto — wykres, wskaźniki, tester, skaner, alerty.</li>
+    <li>Po drodze uczymy się, czego używać: jakiej AI, jakich narzędzi, jakich technologii. Tym jest ta lekcja.</li>
+    <li>To realne — ja już mam taką platformę: Privoty, privoty.pl. Działa sama, na serwerze, na wysokim poziomie.</li>
+    <li>Wykres w 100% własny: rysowany na canvas, ciężkie liczenie w Rust → WebAssembly, bez gotowej biblioteki wykresów.</li>
+    <li>Zakładka Trading przeszukuje ponad 1000 symboli — cały katalog futures na MEXC. Do tego Binance i Hyperliquid.</li>
+    <li>Reszta: newsy oceniane przez AI, pivoty i Golden Zone, Bookmapa z footprintem, Deep Test strategii, bot na Hyperliquid (paper i real), alerty na Telegram ze zdjęciem wykresu, replay rynku z PnL, złote strzały 7D, taśma transakcji całego MEXC, własne wskaźniki.</li>
+    <li>Ten wykres rysuje się tak samo jak mini wykresy na Privoty — świeca po świecy, od lewej do prawej. Z internetem to prawdziwe świece BTC.</li>
+  </ul></aside>
+</section>
+
+<!-- 3 · WYBÓR AI -->
+<section class="slide" data-title="Którą AI wybrać">
+  <div class="kicker r" style="--i:0">01 · Wybór AI</div>
+  <h2 class="r" style="--i:1">Stawiamy na dwie: <span class="gold">Codex</span> i <span class="gold">Claude</span></h2>
+  <div class="duo">
+    <div class="ai-card r" style="--i:2">
+      <div class="ai-head">
+        <img class="ai-ico" src="img/openai.svg" alt="">
+        <div class="ai-name">Codex</div>
+        <div class="ai-by">OpenAI</div>
+        <div class="ai-price">20 $ <small>/ mies.</small></div>
+      </div>
+      <div class="term openai">
+        <div class="term-bar"><i></i><i></i><i></i><span>codex — moj-projekt</span></div>
+        <div class="term-body">
+          <div><span class="p">&gt;</span> <span class="u">dodaj formularz zamówienia</span></div>
+          <div class="a"><span class="brand">•</span> Edytuję index.html <span class="ok">+42</span></div>
+          <div class="a"><span class="ok">✓</span> Zrobione — sprawdź formularz.</div>
+          <div><span class="p">&gt;</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+      <ul class="pc">
+        <li class="plus"><b>ChatGPT w cenie</b> — czat, który nie zżera limitów</li>
+        <li class="plus"><b>Codex</b> do ciężkiej pracy w kodzie</li>
+        <li class="plus"><b>Odnawianie limitów</b> — czasem dostajesz reset w Codexie</li>
+      </ul>
+    </div>
+    <div class="ai-card r" style="--i:3">
+      <div class="ai-head">
+        <img class="ai-ico" src="img/claude.svg" alt="">
+        <div class="ai-name">Claude Code</div>
+        <div class="ai-by">Anthropic</div>
+        <div class="ai-price">20 $ <small>/ mies.</small></div>
+      </div>
+      <div class="term claude">
+        <div class="term-bar"><i></i><i></i><i></i><span>claude — moj-projekt</span></div>
+        <div class="term-body">
+          <div><span class="p">&gt;</span> <span class="u">zrób stronę z menu pizzerii</span></div>
+          <div class="a"><span class="brand">●</span> Tworzę index.html i style.css…</div>
+          <div class="a"><span class="brand">●</span> Gotowe. Otwórz w przeglądarce.</div>
+          <div><span class="p">&gt;</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+      <ul class="pc">
+        <li class="plus"><b>Naprawdę dużo potrafi</b> i jest mądry</li>
+        <li class="plus"><b>Lepszy do ciężkich zadań</b> — lepiej się sprawdza</li>
+        <li class="minus"><b>Brak zwykłego czatu bez limitu</b> — każde pytanie zjada tokeny</li>
+      </ul>
+    </div>
+  </div>
+  <div class="skip-strip r" style="--i:4">
+    <div class="skip-group">
+      <span class="lbl">Odpuszczamy</span>
+      <span class="x">DeepSeek</span>
+      <span class="x">Kimi</span>
+    </div>
+    <div class="skip-group gem">
+      <img class="gem-ico" src="img/gemini.svg" alt="">
+      <span><b>Gemini</b> — tylko do zdjęć i filmów. Tu robi dobrą robotę, część za darmo.</span>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Codex i Claude Code to agenci: sami czytają projekt, tworzą i poprawiają pliki — nie tylko odpowiadają w czacie.</li>
+    <li>Oba po 20 $ miesięcznie. Jak Claude'owi zabraknie limitu, jest wyższy plan (Max).</li>
+    <li>Codex: w tej samej cenie masz ChatGPT, który nie zżera limitów; limitowany jest tylko Codex. Do tego czasem odnawiają limity w Codexie. Dlatego rozmowy i planowanie robimy w ChatGPT.</li>
+    <li>Claude: naprawdę dużo potrafi, jest mądry, do ciężkich zadań lepszy. Minus: nie ma zwykłego czatu bez limitu — czat i Claude Code to jeden limit.</li>
+    <li>DeepSeek i Kimi odpuszczamy. Gemini tylko do zdjęć i filmów.</li>
+  </ul></aside>
+</section>
+
+<!-- 4 · AZURE -->
+<section class="slide" data-title="Na poważnie: Azure">
+  <div class="kicker r" style="--i:0">01 · Dla tych, co na poważnie</div>
+  <h2 class="r" style="--i:1">Azure od Microsoftu — <span class="gold">AI po API</span></h2>
+  <p class="lead r" style="--i:2">Jedno konto, dostęp do każdego dostępnego modelu — płacisz tylko za tokeny.</p>
+  <div class="flow r" style="--i:3">
+    <div class="node-box">
+      <div class="t">Ty</div>
+      <div class="v">Twój program</div>
+      <div class="s">strona, bot, aplikacja</div>
+    </div>
+    <div class="arrow"><span>zapytanie API</span></div>
+    <div class="node-box hl">
+      <div class="t">Microsoft</div>
+      <div class="v gold"><img class="box-ico" src="img/azure.svg" alt="">Azure</div>
+      <div class="s">API klasy firmowej</div>
+    </div>
+    <div class="arrow"><span>wybierasz</span></div>
+    <div class="node-box models">
+      <div class="t">Każdy model</div>
+      <div class="cloud" aria-label="OpenAI, Claude, Meta, Mistral, DeepSeek, xAI, Cohere, Microsoft, NVIDIA, Hugging Face">
+        <img src="img/openai.svg"      alt="" style="left:0%;  top:8%;  width:58px; --d:0s">
+        <img src="img/claude.svg"      alt="" style="left:22%; top:46%; width:56px; --d:-1.2s">
+        <img src="img/meta.svg"        alt="" style="left:40%; top:0%;  width:50px; --d:-2.1s">
+        <img src="img/mistral.svg"     alt="" style="left:84%; top:4%;  width:42px; --d:-0.6s">
+        <img src="img/deepseek.svg"    alt="" style="left:62%; top:50%; width:52px; --d:-3s">
+        <img src="img/xai.svg"         alt="" style="left:2%;  top:66%; width:36px; --d:-1.7s">
+        <img src="img/cohere.svg"      alt="" style="left:88%; top:62%; width:34px; --d:-2.6s">
+        <img src="img/microsoft.svg"   alt="" style="left:24%; top:4%;  width:30px; --d:-0.9s">
+        <img src="img/nvidia.svg"      alt="" style="left:44%; top:66%; width:38px; --d:-2.3s">
+        <img src="img/huggingface.svg" alt="" style="left:66%; top:6%;  width:36px; --d:-1.5s">
+      </div>
+    </div>
+  </div>
+  <div class="facts r" style="--i:4">
+    <div class="fact"><div class="n">Bez subskrypcji na model</div><p>Nie kupujesz osobnego abonamentu u każdej firmy, jak ChatGPT Plus czy Claude Pro.</p></div>
+    <div class="fact"><div class="n">Płacisz za tokeny</div><p>Tylko za to, co faktycznie zużyjesz. Nie używasz — nie płacisz.</p></div>
+    <div class="fact"><div class="n">API najwyższej klasy</div><p>Dla firm: umowa i faktura z Microsoftu, stabilność, wybór regionu danych.</p></div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Dla tych, którzy chcą na poważnie, np. dla firmy: Azure, Microsoft, po API — to jest bajka.</li>
+    <li>Nie kupujemy subskrypcji na jeden model. Mamy dostęp do każdego dostępnego modelu i płacimy za tokeny.</li>
+    <li>Na Azure jest prawie wszystko: OpenAI, Claude, Meta (Llama), Mistral, DeepSeek, Grok od xAI, Cohere, modele Microsoftu i NVIDII.</li>
+    <li>API = program wysyła zapytanie z kluczem i dostaje odpowiedź. Bez okna czatu.</li>
+    <li>Na start nie jest potrzebne — wystarczą Claude i Codex za 20 $.</li>
+  </ul></aside>
+</section>
+
+<!-- 5 · NARZĘDZIA -->
+<section class="slide" data-title="Narzędzia">
+  <div class="kicker r" style="--i:0">02 · Narzędzia</div>
+  <h2 class="r" style="--i:1">Jeden edytor, AI w panelu obok</h2>
+  <div class="tools">
+    <div class="vsc r" style="--i:2">
+      <div class="vsc-top"><img class="vsc-logo" src="img/vscode.svg" alt=""><span>Plik · Edycja · Widok · Terminal</span><span class="ttl">moj-projekt — Visual Studio Code</span></div>
+      <div class="vsc-main">
+        <div class="vsc-act"><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="vsc-files">
+          <div class="h">Eksplorator</div>
+          <div>▾ moj-projekt</div>
+          <div>&nbsp;&nbsp;package.json</div>
+          <div class="sel">&nbsp;&nbsp;server.js</div>
+          <div>&nbsp;&nbsp;▸ public</div>
+        </div>
+        <div class="vsc-code"><span class="k">const</span> express = <span class="f">require</span>(<span class="s">'express'</span>);
+<span class="k">const</span> app = <span class="f">express</span>();
+
+app.<span class="f">get</span>(<span class="s">'/'</span>, (req, res) =&gt; {
+  res.<span class="f">send</span>(<span class="s">'Cześć, klub!'</span>);
+});
+
+app.<span class="f">listen</span>(<span class="s">3000</span>);
+<span class="c">// serwer działa</span></div>
+        <div class="vsc-ai">
+          <div class="h">Claude Code / Codex</div>
+          <div class="bubble me">Zrób serwer, który wita gości klubu.</div>
+          <div class="bubble ai">Utworzyłem server.js. Uruchom: <span class="mono gold">npm start</span></div>
+          <div class="bubble me">Dodaj stronę z listą zajęć.</div>
+        </div>
+      </div>
+      <div class="vsc-status"><b>Node.js</b><span>UTF-8</span><span>JavaScript</span></div>
+    </div>
+    <ol class="checklist with-ico r" style="--i:3">
+      <li><span class="ico"><img src="img/vscode.svg" alt=""></span><span class="t">Visual Studio Code</span><span class="d">Darmowy edytor. Tu otwieramy folder projektu.</span></li>
+      <li><span class="ico pair-ico"><img src="img/claude.svg" alt=""><img src="img/openai.svg" alt=""></span><span class="t">Rozszerzenie AI</span><span class="d">Claude Code lub Codex — w panelu obok kodu. Widzi pliki, pisze i poprawia.</span></li>
+      <li><span class="ico"><img src="img/nodejs.svg" alt=""></span><span class="t">Node.js (wersja LTS)</span><span class="d">Uruchamia nasze projekty.</span></li>
+      <li class="opt"><span class="ico"><img src="img/visualstudio.svg" alt=""></span><span class="t">Visual Studio Community</span><span class="d">Tylko do C# WinForms — to inny program niż VS Code.</span></li>
+    </ol>
+  </div>
+  <aside class="notes"><ul>
+    <li>VS Code — jeden edytor do wszystkiego, za darmo.</li>
+    <li>Rozszerzenie Claude Code / Codex: AI siedzi obok kodu, a nie w osobnej karcie przeglądarki.</li>
+    <li>Node.js instalujemy raz — wersja LTS (stabilna).</li>
+    <li>Visual Studio Community (fioletowe) tylko dla WinForms — nie mylić z VS Code.</li>
+  </ul></aside>
+</section>
+
+<!-- 6 · MAPA TECHNOLOGII -->
+<section class="slide" data-title="Technologie — mapa">
+  <div class="kicker r" style="--i:0">03 · Technologie</div>
+  <h2 class="r" style="--i:1">Co chcesz zrobić → <span class="gold">czego użyć</span></h2>
+  <div class="techmap">
+    <div class="trow r" style="--i:2; --c: var(--node)"><div class="need">Strona, serwer, aplikacja na komputer</div><div class="to">→</div><div class="lang">Node.js</div><div class="why">prawie wszystko, każdy system — główny wybór</div></div>
+    <div class="trow r" style="--i:3; --c: var(--rust)"><div class="need">Musi być szybkie, nie może lagować</div><div class="to">→</div><div class="lang">Rust</div><div class="why">szybki, kompilator łapie błędy, RAM nie cieknie</div></div>
+    <div class="trow r" style="--i:4; --c: var(--ts)"><div class="need">Front, który ma być oszczędny</div><div class="to">→</div><div class="lang">TypeScript</div><div class="why">lekki, prawie wszędzie — także na froncie</div></div>
+    <div class="trow r" style="--i:5; --c: var(--cs)"><div class="need">Pierwsza aplikacja, krok po kroku</div><div class="to">→</div><div class="lang">C# WinForms</div><div class="why">od Microsoftu — konsola albo okna z klocków</div></div>
+    <div class="trow dim r" style="--i:6; --c: var(--cpp)"><div class="need">Rzeczy krytyczne, niskopoziomowe</div><div class="to">→</div><div class="lang">C++</div><div class="why">szybki, ale RAM pilnujesz sam — dużo trudniejszy</div></div>
+    <div class="trow no r" style="--i:7; --c: var(--no)"><div class="need">…a Python?</div><div class="to">→</div><div class="lang"><span>Python</span></div><div class="why">rezygnujemy — za dużo kłopotów (zaraz pokażę)</div></div>
+  </div>
+  <aside class="notes"><ul>
+    <li>To mapa na całe zajęcia — kolejne slajdy rozwijają każdy wiersz.</li>
+    <li>Node prawie do wszystkiego. Rust, gdy liczy się prędkość. TypeScript na oszczędne fronty.</li>
+    <li>C# WinForms — najłatwiej zacząć, bo widać, co się składa.</li>
+    <li>C++: szybki, ale pamięć (RAM) pilnujesz sam i łatwo o wycieki — dużo, dużo trudniejszy, nie na start.</li>
+  </ul></aside>
+</section>
+
+<!-- 7 · NODE -->
+<section class="slide" data-title="Node.js">
+  <div class="kicker r" style="--i:0">03 · Node.js</div>
+  <h2 class="r" style="--i:1">Jeden język, <span style="color:var(--node)">prawie wszystko</span></h2>
+  <div class="hub compact r" style="--i:2; flex:none; height:520px">
+    <svg viewBox="0 0 1620 520" preserveAspectRatio="none" aria-hidden="true">
+      <g stroke="#3a3220" stroke-width="2" fill="none">
+        <line x1="810" y1="260" x2="530" y2="90"/>
+        <line x1="810" y1="260" x2="1090" y2="90"/>
+        <line x1="810" y1="260" x2="530" y2="380"/>
+        <line x1="810" y1="260" x2="1090" y2="380"/>
+      </g>
+    </svg>
+    <div class="hub-center"><img class="hub-ico" src="img/nodejs.svg" alt=""><div class="v">Node.js</div><div class="s">+ 2 mln paczek npm</div></div>
+    <div class="spoke" style="left:0; top:0"><div class="t">Strony internetowe</div><div class="d">Front i backend w tym samym języku.</div><div class="tag">html · css · js</div></div>
+    <div class="spoke" style="right:0; top:0; text-align:right"><div class="t">Serwery i API</div><div class="d">Logowanie, baza danych, płatności.</div><div class="tag">express</div></div>
+    <div class="spoke" style="left:0; top:310px"><div class="t">Aplikacja na komputer</div><div class="d">Aplikacja z przeglądarki działa tak samo jak zwykły program — tak zrobiono VS Code.</div><div class="tag">electron</div></div>
+    <div class="spoke" style="right:0; top:310px; text-align:right"><div class="t">Boty i automaty</div><div class="d">Discord, Telegram — skrypty, które robią robotę za ciebie.</div><div class="tag">npm start</div></div>
+  </div>
+  <div class="platforms r" style="--i:3">
+    <span class="lbl">Działa na</span>
+    <span class="pf"><img src="img/windows.svg" alt="">Windows</span>
+    <span class="pf"><img src="img/linux.svg" alt="">Linux</span>
+    <span class="pf"><img src="img/apple.svg" alt="">macOS</span>
+    <span class="pf"><img src="img/android.svg" alt="">telefonie — przez przeglądarkę</span>
+  </div>
+  <aside class="notes"><ul>
+    <li>Node naprawdę ma szereg możliwości do szybkich rzeczy — m.in. boty.</li>
+    <li>Wspiera Windowsa, Linuxa i Maca; strona/aplikacja przeglądarkowa działa też na telefonie.</li>
+    <li>Electron: zamiast strony mamy zwykłą aplikację na komputer — VS Code, którego używamy, sam jest w Electronie.</li>
+    <li>Wysłanie projektu: npm install i działa (pokażę przy Pythonie).</li>
+  </ul></aside>
+</section>
+
+<!-- 8 · RUST + TYPESCRIPT -->
+<section class="slide" data-title="Rust i TypeScript">
+  <div class="kicker r" style="--i:0">03 · Gdy liczy się prędkość</div>
+  <h2 class="r" style="--i:1">Nie może lagować? <span style="color:var(--rust)">Rust</span> i <span style="color:var(--ts)">TypeScript</span></h2>
+  <div class="pair">
+    <div class="col r" style="--i:2; --c: var(--rust)">
+      <div class="col-h"><span class="v">Rust</span><span class="s">serwer i ciężkie liczenie</span></div>
+      <div class="lanes">
+        <div class="lane"><div class="src">cargo build</div><div class="ar">→</div><div class="dst">Serwer / program<small>szybki, mało RAM-u, bez lagów</small></div></div>
+        <div class="lane"><div class="src">wasm-pack</div><div class="ar">→</div><div class="dst">WebAssembly w przeglądarce<small>ciężkie liczenie po stronie frontu</small></div></div>
+      </div>
+      <ul class="pc"><li class="plus"><b>Kompilator</b> wyłapie błędy, zanim program ruszy</li><li class="plus"><b>Prędkość</b> — jeden z najszybszych języków</li><li class="plus"><b>RAM nie cieknie</b> nawet przy długiej pracy</li></ul>
+    </div>
+    <div class="col r" style="--i:3; --c: var(--ts)">
+      <div class="col-h"><span class="v">TypeScript</span><span class="s">oszczędny front</span></div>
+      <div class="lanes">
+        <div class="lane"><div class="src">app.ts</div><div class="ar">→</div><div class="dst">Typy pilnują danych<small>błąd widać, zanim uruchomisz</small></div></div>
+        <div class="lane"><div class="src">build</div><div class="ar">→</div><div class="dst">Działa na froncie<small>w przeglądarce zostaje lekki JavaScript</small></div></div>
+      </div>
+      <ul class="pc"><li class="plus"><b>Lekki</b> i nastawiony na wydajność</li><li class="plus"><b>Prawie wszędzie</b> — front, serwer, skrypty</li><li class="plus"><b>AI pisze w nim pewniej</b> — typy mówią, co gdzie pasuje</li></ul>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Gdzie musi być prędkość i nie może lagować — Rust.</li>
+    <li>Rust może być od razu serwerem, a przez WebAssembly działa też w przeglądarce, po stronie frontu.</li>
+    <li>Fronty, gdzie ma być oszczędnie i bez lagów — TypeScript.</li>
+    <li>Rust: kompilator wyłapie błędy, zanim program ruszy; prędkość; RAM nie cieknie przy długiej pracy.</li>
+    <li>TypeScript: lekki, nastawiony na wydajność, prawie wszędzie da się go użyć — także po stronie frontu.</li>
+  </ul></aside>
+</section>
+
+<!-- 9 · C# WINFORMS -->
+<section class="slide" data-title="C# WinForms">
+  <div class="kicker r" style="--i:0">03 · Na sam początek</div>
+  <h2 class="r" style="--i:1"><span style="color:var(--cs)">C# WinForms</span> — program z klocków</h2>
+  <div class="wf">
+    <div class="r" style="--i:2">
+      <ol class="checklist">
+        <li><span class="num">1</span><span class="t">Przeciągasz klocki</span><span class="d">Przycisk, pole tekstowe, tabela — myszką na okno.</span></li>
+        <li><span class="num">2</span><span class="t">Planujesz wygląd sam</span><span class="d">Od razu widzisz, jak będzie wyglądał program.</span></li>
+        <li><span class="num">3</span><span class="t">AI dopisuje działanie</span><span class="d">„Po kliknięciu policz sumę i pokaż wynik.”</span></li>
+      </ol>
+      <div class="cs-note">
+        <img src="img/visualstudio.svg" alt="">
+        <p><b>C# jest od Microsoftu.</b> Da się go użyć jako zwykłą konsolę, ale WinForms są fajniejsze — aplikację budujesz sam.</p>
+      </div>
+    </div>
+    <div class="designer r" style="--i:3">
+      <div class="toolbox">
+        <div class="h">Przybornik</div>
+        <div class="it">Label</div>
+        <div class="it">TextBox</div>
+        <div class="it drag">Button</div>
+        <div class="it">DataGridView</div>
+        <div class="it">CheckBox</div>
+      </div>
+      <div class="canvas">
+        <div class="form">
+          <div class="form-bar">Kalkulator składek</div>
+          <div class="ctl lbl">Kwota:</div>
+          <div class="ctl box"></div>
+          <div class="ctl btn">Policz</div>
+          <div class="ctl ghost">Button</div>
+          <div class="ctl code"><b>void</b> Policz_Click() { <span style="color:var(--gold)">/* tu pisze AI */</span> }</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Do zaczęcia z programowaniem C# WinForms: stawiamy bloczki i sami planujemy aplikację.</li>
+    <li>Działa w Visual Studio Community (nie VS Code).</li>
+    <li>C# jest od Microsoftu. Może być zwykłą konsolą, ale WinForms są fajniejsze — sami budujemy aplikację.</li>
+    <li>Klikamy dwa razy w przycisk → powstaje miejsce na kod → prosimy AI, co ma się dziać.</li>
+  </ul></aside>
+</section>
+
+<!-- 10 · PYTHON -->
+<section class="slide" data-title="Dlaczego nie Python">
+  <div class="kicker r" style="--i:0">03 · Python</div>
+  <h2 class="r" style="--i:1">Wysyłasz projekt koledze. <span class="gold">Co się dzieje?</span></h2>
+  <div class="versus">
+    <div class="r" style="--i:2">
+      <div class="side-h" style="color:var(--node)">Node.js <span class="tag">działa</span></div>
+      <div class="term">
+        <div class="term-bar"><i></i><i></i><i></i><span>komputer kolegi</span></div>
+        <div class="term-body">
+          <div><span class="p">&gt;</span> <span class="u">npm install</span></div>
+          <div class="a">added 132 packages in 4s</div>
+          <div><span class="p">&gt;</span> <span class="u">npm start</span></div>
+          <div class="ok">✓ Serwer działa: localhost:3000</div>
+        </div>
+      </div>
+    </div>
+    <div class="r" style="--i:3">
+      <div class="side-h" style="color:var(--no)">Python <span class="tag">jak zwykle</span></div>
+      <div class="term">
+        <div class="term-bar"><i></i><i></i><i></i><span>komputer kolegi</span></div>
+        <div class="term-body">
+          <div><span class="p">&gt;</span> <span class="u">pip install -r requirements.txt</span></div>
+          <div class="err">ERROR: No matching distribution</div>
+          <div class="err">&nbsp;&nbsp;found for numpy==1.24.0</div>
+          <div><span class="p">&gt;</span> <span class="u">python app.py</span></div>
+          <div class="err">ModuleNotFoundError: 'cv2'</div>
+          <div class="dim"># venv? inna wersja Pythona? …</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note-row r" style="--i:4">
+    <p><b>package.json + lock</b> — dokładne wersje jadą razem z projektem.</p>
+    <p><b>Wyjątek:</b> gdy potrzebna gotowa rzecz, która istnieje tylko w Pythonie.</p>
+  </div>
+  <aside class="notes"><ul>
+    <li>Z Pythona rezygnujemy. Zawsze dużo kłopotu z pip install i bibliotekami.</li>
+    <li>Wysyłasz komuś projekt — ma inną wersję i nie działa.</li>
+    <li>W Node: npm install i tyle.</li>
+    <li>Python przydaje się wtedy, gdy trzeba szybko zrobić coś, na co jest gotowa biblioteka tylko w Pythonie.</li>
+  </ul></aside>
+</section>
+
+<!-- 11 · SKILLE -->
+<section class="slide" data-title="Skille">
+  <div class="kicker r" style="--i:0">04 · Skille</div>
+  <h2 class="r" style="--i:1">Skill = nowa umiejętność dla AI</h2>
+  <div class="skills">
+    <div class="tree r" style="--i:2">
+      <div class="d">skills/</div>
+      <div>└─ <span class="d">faktura-pdf/</span></div>
+      <div>&nbsp;&nbsp;&nbsp;├─ <span class="m">SKILL.md</span> &nbsp;<span class="c">← instrukcja</span></div>
+      <div>&nbsp;&nbsp;&nbsp;└─ <span class="m">generuj.js</span> <span class="c">← skrypt</span></div>
+      <div class="c" style="margin-top:18px">AI sięga po skill sama,<br>kiedy jest potrzebny.</div>
+    </div>
+    <div class="uses">
+      <div class="use r" style="--i:3">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3l7 17 2.2-6.8L20 11z"/></svg>
+        <div class="t">Klika za ciebie</div><div class="d">Przegląda strony, wypełnia formularze, obsługuje aplikacje.</div>
+      </div>
+      <div class="use r" style="--i:4">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+        <div class="t">Robi pliki</div><div class="d">Excel, PDF, Word, prezentacje.</div>
+      </div>
+      <div class="use r" style="--i:5">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l2 2 3-4"/></svg>
+        <div class="t">Pamięta twoje sposoby</div><div class="d">Jak testujesz, jak wysyłasz projekt, jak ma wyglądać kod.</div>
+      </div>
+      <div class="use r" style="--i:6">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        <div class="t">Robisz własne</div><div class="d">Opisujesz raz — AI robi tak za każdym razem.</div>
+      </div>
+    </div>
+  </div>
+  <div class="ask r" style="--i:7">
+    <span>Zanim zaczniesz cokolwiek, zapytaj czat:</span>
+    <span class="q">„Masz skill do tego?”</span>
+  </div>
+  <aside class="notes"><ul>
+    <li>Do każdej rzeczy najlepiej najpierw spytać czat, czy ma do tego skille.</li>
+    <li>Skille umożliwiają przeróżne rzeczy: AI może sama się poruszać, klikać w aplikacji, obsługiwać przeglądarkę.</li>
+    <li>Sami możemy robić skille — to folder z instrukcją (SKILL.md) i ewentualnie skryptem.</li>
+    <li>Działa w Claude Code i w Codexie.</li>
+  </ul></aside>
+</section>
+
+<!-- 12 · JAK ZACZĄĆ -->
+<section class="slide" data-title="Jak zacząć — 5 kroków">
+  <div class="kicker r" style="--i:0">05 · Jak zacząć</div>
+  <h2 class="r" style="--i:1">Pierwszy projekt w <span class="gold">5 krokach</span></h2>
+  <div class="steps">
+    <div class="step r" style="--i:2"><div class="dot">1</div><div class="who"><img src="img/openai.svg" alt="">ChatGPT</div><div class="t">Opisz pomysł</div><div class="d">Co chcesz zrobić i po co — zwykłymi słowami.</div></div>
+    <div class="step r" style="--i:3"><div class="dot">2</div><div class="who"><img src="img/openai.svg" alt="">ChatGPT</div><div class="t">Porozmawiaj</div><div class="d">Doprecyzujcie cele i zakres technologii.</div></div>
+    <div class="step r" style="--i:4"><div class="dot">3</div><div class="who"><img src="img/openai.svg" alt="">ChatGPT</div><div class="t">Pisze prompt</div><div class="d">Gdy plan jest jasny — gotowe polecenie dla Claude'a.</div></div>
+    <div class="step r" style="--i:5"><div class="dot hot">4</div><div class="who claude"><img src="img/claude.svg" alt="">Claude Code</div><div class="t">Cała robota</div><div class="d">Wklejasz prompt w VS Code — Claude robi najtrudniejszą pracę.</div></div>
+    <div class="step r" style="--i:6"><div class="dot">5</div><div class="who"><img src="img/openai.svg" alt="">Codex</div><div class="t">Poprawki</div><div class="d">Drobne zmiany i dopieszczanie.</div></div>
+  </div>
+  <div class="ask stack r" style="--i:7; margin-top:80px">
+    <span>Pierwsza wiadomość do ChatGPT:</span>
+    <span class="q">„Chcę zrobić stronę z planem zajęć naszego klubu. Dopytaj mnie o szczegóły, a potem napisz prompt dla Claude'a.”</span>
+  </div>
+  <aside class="notes"><ul>
+    <li>Najpierw ChatGPT: wysyłamy pomysł i rozmawiamy, aż znamy dokładnie cele i zakres technologii.</li>
+    <li>Rozmowa w ChatGPT nie zjada limitu Claude'a — dlatego planujemy tam.</li>
+    <li>ChatGPT przygotowuje prompt dla Claude'a. Claude wykonuje całą najtrudniejszą pracę.</li>
+    <li>Codex — ewentualne poprawki.</li>
+    <li>Wcześniej: VS Code, Node.js i rozszerzenia zainstalowane (slajd 4), jeden projekt = jeden folder.</li>
+  </ul></aside>
+</section>
+
+<!-- 13 · ZASADY -->
+<section class="slide" data-title="Najważniejsze zasady">
+  <div class="kicker r" style="--i:0">05 · Co najważniejsze</div>
+  <h2 class="r" style="--i:1">Jak robić to <span class="gold">poprawnie i najłatwiej</span></h2>
+  <div class="rules">
+    <div class="rule r" style="--i:2"><div class="t">Mów jak do człowieka</div><div class="d">Cel, dla kogo, jak ma wyglądać. Im dokładniej, tym mniej poprawek.</div></div>
+    <div class="rule r" style="--i:3"><div class="t">Małe kroki</div><div class="d">Jedna rzecz naraz. Działa? Dopiero wtedy następna.</div></div>
+    <div class="rule r" style="--i:4"><div class="t">Sprawdzaj sam</div><div class="d">Otwórz, kliknij, zobacz. „Gotowe” od AI to jeszcze nie dowód.</div></div>
+    <div class="rule r" style="--i:5"><div class="t">Kopia przed dużą zmianą</div><div class="d">Zapisz działającą wersję, zanim każesz AI przebudować pół projektu.</div></div>
+    <div class="rule r" style="--i:6"><div class="t">Najpierw zapytaj o skill</div><div class="d">Często gotowa umiejętność oszczędza godzinę.</div></div>
+    <div class="rule r" style="--i:7"><div class="t">Błąd? Wklej go AI</div><div class="d">Cały komunikat, bez tłumaczenia. AI wie, co z nim zrobić.</div></div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Najczęstszy błąd początkujących: jedno ogromne polecenie „zrób mi całą aplikację”.</li>
+    <li>Druga rzecz: wiara na słowo. Zawsze uruchom i sprawdź sam.</li>
+  </ul></aside>
+</section>
+
+<!-- 14 · PODSUMOWANIE -->
+<section class="slide" data-title="Podsumowanie — czego i jak używać">
+  <div class="kicker r" style="--i:0">Podsumowanie · czego i jak używać</div>
+  <h2 class="r" style="--i:1">Najprostszy i wydajny sposób <span class="gold">pracy z AI</span></h2>
+  <div class="sum">
+    <div class="sum-row r" style="--i:2">
+      <div class="sum-h">Czego używać</div>
+      <div class="sum-use">
+        <div class="it">
+          <div class="ico"><img src="img/claude.svg" alt=""><img src="img/openai.svg" alt=""></div>
+          <div class="t">Claude + Codex</div><div class="d">po 20 $ miesięcznie</div>
+        </div>
+        <div class="it">
+          <div class="ico"><img src="img/vscode.svg" alt=""></div>
+          <div class="t">VS Code</div><div class="d">darmowy, AI obok kodu</div>
+        </div>
+        <div class="it">
+          <div class="ico"><img src="img/nodejs.svg" alt=""></div>
+          <div class="t" style="color:var(--node)">Node.js</div><div class="d">npm install i działa</div>
+        </div>
+        <div class="it">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+          <div class="t">Skille</div><div class="d">zapytaj: „masz skill?”</div>
+        </div>
+      </div>
+    </div>
+    <div class="sum-row r" style="--i:3">
+      <div class="sum-h">Jak używać</div>
+      <div class="sum-how">
+        <div class="chain">
+          <div class="lk"><img src="img/openai.svg" alt=""><div><div class="t">ChatGPT</div><div class="d">rozmowa, plan, prompt</div></div></div>
+          <div class="ar">→</div>
+          <div class="lk hot"><img src="img/claude.svg" alt=""><div><div class="t">Claude Code</div><div class="d">najtrudniejsza praca</div></div></div>
+          <div class="ar">→</div>
+          <div class="lk"><img src="img/openai.svg" alt=""><div><div class="t">Codex</div><div class="d">poprawki</div></div></div>
+        </div>
+        <div class="mini-rules">
+          <span>Małe kroki</span>
+          <span>Sprawdzaj sam</span>
+          <span>Błąd? Wklej go AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Podsumowanie drogi: najprostszy i wydajny sposób pracy z AI — z tym budujemy naszą platformę.</li>
+    <li>Czego używać: Claude i Codex po 20 $, VS Code z AI w panelu, Node.js do prawie wszystkiego, a przed każdą rzeczą pytamy o skill.</li>
+    <li>Jak używać: rozmowa i plan w ChatGPT (nie zjada limitów) → Claude robi najtrudniejszą pracę → Codex poprawki.</li>
+    <li>I trzy nawyki: małe kroki, sprawdzaj sam, błąd wklejasz AI w całości.</li>
+    <li>Wydajnie = nie płacisz za pięć abonamentów i nie marnujesz limitu Claude'a na pogaduszki.</li>
+  </ul></aside>
+</section>
+
+<!-- 15 · BACKEND I FRONTEND -->
+<section class="slide" data-title="Czego użyjemy — backend i frontend">
+  <div class="kicker r" style="--i:0">06 · Czego użyjemy</div>
+  <h2 class="r" style="--i:1">Backend i frontend — <span class="gold">z czego zbudujemy</span></h2>
+  <div class="stackmap">
+    <div class="sc src r" style="--i:2">
+      <div class="role">Źródło danych</div>
+      <div class="name">API giełd</div>
+      <p class="what">Świece i ceny za darmo, bez konta.</p>
+      <div class="ex">
+        <a href="https://developers.binance.com/en/docs/products/derivatives-trading-usds-futures/general-info" target="_blank" rel="noopener"><img src="img/binance.svg" alt="">Binance</a>
+        <a href="https://mexcdevelop.github.io/apidocs/contract_v1_en/" target="_blank" rel="noopener"><img src="img/mexc.svg" alt="">MEXC</a>
+        <a href="https://hyperliquid.gitbook.io/hyperliquid-docs" target="_blank" rel="noopener"><img src="img/hyperliquid.svg" alt="">Hyperliquid</a>
+      </div>
+      <div class="doc">dokumentacja API ↗</div>
+    </div>
+    <div class="arrow"><span>REST<br>WebSocket</span></div>
+    <div class="sc be r" style="--i:3">
+      <div class="role">Backend</div>
+      <div class="name" style="color:var(--node)"><img src="img/nodejs.svg" alt="">Node.js</div>
+      <p class="what">Pobiera świece, zapisuje je u siebie, liczy wskaźniki i testy.</p>
+      <pre class="snip"><span class="c">// serwer: świece dla wykresu</span>
+app.<span class="f">get</span>(<span class="s">'/api/swiece'</span>, <span class="k">async</span> (req, res) =&gt; {
+  <span class="k">const</span> swiece = <span class="k">await</span> <span class="f">pobierz</span>(<span class="s">'BTCUSDT'</span>);
+  res.<span class="f">json</span>(swiece);
+});</pre>
+      <ul class="fast">
+        <li>Świece trzymane na dysku</li>
+        <li>Na żywo przez WebSocket</li>
+      </ul>
+      <div class="doc"><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org ↗</a></div>
+    </div>
+    <div class="arrow"><span>WebSocket</span></div>
+    <div class="sc fe r" style="--i:4">
+      <div class="role">Frontend</div>
+      <div class="name">Wykres na canvas</div>
+      <p class="what">
+        <span class="li"><img src="img/typescript.svg" alt=""><b style="color:var(--ts)">TypeScript</b>&nbsp;rysuje</span>
+        <span class="li"><img src="img/rust.svg" alt=""><img src="img/webassembly.svg" alt=""><b style="color:var(--rust)">Rust → WASM</b>&nbsp;liczy</span>
+      </p>
+      <ul class="fast">
+        <li>Najpierw najnowsze świece</li>
+        <li>Rysuje tylko to, co widać</li>
+        <li>Ciężkie liczenie osobno</li>
+      </ul>
+      <div class="doc">
+        <a href="https://www.typescriptlang.org" target="_blank" rel="noopener">typescriptlang.org ↗</a>
+        <a href="https://www.rust-lang.org" target="_blank" rel="noopener">rust-lang.org ↗</a>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Backend to serwer — u nas Node.js, ten sam, który znamy z dzisiejszej lekcji. Pobiera świece z giełdy, zapisuje je u siebie, liczy wskaźniki i testy, wysyła dane do przeglądarki.</li>
+    <li>Na slajdzie cały kod jednego „okienka” serwera: przeglądarka pyta o świece, serwer odpowiada. Tak wygląda backend.</li>
+    <li>Frontend to to, co widać: wykres na canvas. TypeScript rysuje, a ciężkie liczenie robi Rust skompilowany do WebAssembly.</li>
+    <li>Giełdy dają publiczne API za darmo i bez konta. REST = pytamy o historię. WebSocket = giełda sama wysyła zmiany na żywo.</li>
+    <li>Ptaszki to zasady szybkości z mojej platformy: świece trzymamy na dysku (giełdy nie pytamy drugi raz), najpierw pokazujemy najnowsze, rysujemy tylko to, co widać, liczenie nie blokuje rysowania.</li>
+  </ul></aside>
+</section>
+
+<!-- 16 · NA ŻYWO -->
+<section class="slide" data-title="BTC na żywo z giełdy">
+  <div class="kicker r" style="--i:0">06 · Zobaczcie na żywo</div>
+  <h2 class="r" style="--i:1">BTC na żywo — <span class="gold">prosto z giełdy</span></h2>
+  <div class="live">
+    <div class="code r" style="--i:2">
+      <div class="term-bar"><i></i><i></i><i></i><span>wykres.js</span></div>
+<pre class="code-body"><span class="c">// 1. Historia: ostatnie 90 świec BTC (1 minuta)</span>
+<span class="k">const</span> url = <span class="s">'https://api.binance.com/api/v3/klines'</span>
+  + <span class="s">'?symbol=BTCUSDT&amp;interval=1m&amp;limit=90'</span>;
+<span class="k">const</span> dane = <span class="k">await</span> (<span class="k">await</span> <span class="f">fetch</span>(url)).<span class="f">json</span>();
+<span class="k">const</span> swiece = dane.<span class="f">map</span>(k =&gt; ({
+  t: k[<span class="n">0</span>], o: +k[<span class="n">1</span>], h: +k[<span class="n">2</span>], l: +k[<span class="n">3</span>], c: +k[<span class="n">4</span>] }));
+<span class="f">rysuj</span>(swiece);
+
+<span class="c">// 2. Na żywo: giełda sama wysyła każdą zmianę</span>
+<span class="k">const</span> ws = <span class="k">new</span> <span class="f">WebSocket</span>(
+  <span class="s">'wss://stream.binance.com:9443/ws/btcusdt@kline_1m'</span>);
+ws.onmessage = (e) =&gt; {
+  <span class="f">aktualizuj</span>(swiece, JSON.<span class="f">parse</span>(e.data).k);
+  <span class="f">rysuj</span>(swiece);  <span class="c">// canvas: tylko to, co widać</span>
+};</pre>
+    </div>
+    <div class="live-chart r" style="--i:3">
+      <div class="lc-head">
+        <img src="img/coin-btc.svg" alt=""><b>BTCUSDT</b><span>1m</span>
+        <span class="lc-src"><img src="img/binance.svg" alt="">Binance</span>
+        <span class="lc-price" id="livePrice">—</span>
+      </div>
+      <canvas class="cv" id="liveChart" aria-label="BTC na żywo"></canvas>
+      <div class="lc-foot"><span class="lc-status connect" id="liveStatus"><i></i>łączenie z giełdą…</span><span id="liveInfo"></span></div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>To działa naprawdę: po lewej cały pomysł w kodzie, po prawej prawdziwy BTC z Binance, rysowany na naszym canvas.</li>
+    <li>Krok 1 — REST: pytamy giełdę o ostatnie 90 świec. Krok 2 — WebSocket: giełda sama wysyła każdą zmianę ceny, a my podmieniamy ostatnią świecę albo dokładamy nową.</li>
+    <li>Cena mruga na zielono/czerwono przy każdym ruchu. Nowa świeca pojawia się co minutę.</li>
+    <li>To jest lekcja 2–4 w pigułce. Na zajęciach każdy zbuduje to u siebie od zera — z Claude'em.</li>
+    <li>Bez internetu wykres przechodzi w symulację i pisze to na dole („brak internetu — symulacja”).</li>
+  </ul></aside>
+</section>
+
+<!-- 17 · PLAN -->
+<section class="slide" data-title="Jak zaczynamy — plan lekcji">
+  <div class="kicker r" style="--i:0">06 · Jak zaczynamy</div>
+  <h2 class="r" style="--i:1">Krok po kroku — <span class="gold">plan kolejnych lekcji</span></h2>
+  <div class="steps six">
+    <div class="step r" style="--i:2"><div class="dot next">2</div><div class="les">Lekcja 2</div><div class="t">Start</div><div class="d">Folder, Git, serwer Node. Pierwsze świece BTC z giełdy.</div></div>
+    <div class="step r" style="--i:3"><div class="dot">3</div><div class="les">Lekcja 3</div><div class="t">Wykres</div><div class="d">Świece na canvas. Przesuwanie i zoom.</div></div>
+    <div class="step r" style="--i:4"><div class="dot">4</div><div class="les">Lekcja 4</div><div class="t">Na żywo</div><div class="d">WebSocket — świeca rośnie na oczach.</div></div>
+    <div class="step r" style="--i:5"><div class="dot">5</div><div class="les">Lekcja 5</div><div class="t">Wskaźniki</div><div class="d">Średnie, RSI i wasze pomysły.</div></div>
+    <div class="step r" style="--i:6"><div class="dot">6</div><div class="les">Lekcja 6</div><div class="t">Tester</div><div class="d">Czy wskaźnik naprawdę zarabiał?</div></div>
+    <div class="step r" style="--i:7"><div class="dot">7</div><div class="les">Lekcja 7</div><div class="t">Skaner</div><div class="d">Wiele rynków naraz i alerty.</div></div>
+  </div>
+  <div class="ask stack r" style="--i:8; margin-top:70px">
+    <span>Pierwsza wiadomość do ChatGPT na lekcji 2:</span>
+    <span class="q">„Chcę zbudować w Node.js własną platformę z wykresami krypto. Na start: serwer, który pobiera świece BTCUSDT z publicznego API giełdy, i stronę, która rysuje je na wykresie. Dopytaj mnie o szczegóły, a potem napisz prompt dla Claude'a.”</span>
+  </div>
+  <aside class="notes"><ul>
+    <li>To plan, nie sztywny grafik — tempo dopasujemy do grupy.</li>
+    <li>Każda lekcja kończy się działającą wersją u każdego — zasada małych kroków.</li>
+    <li>Lekcja 2: folder projektu, Git, serwer Node i pierwsze świece BTC z publicznego API.</li>
+    <li>Tester uczciwy: sygnał liczymy na zamkniętej świecy, wchodzimy na następnej. Jeśli tester „widzi” świecę, która jeszcze się nie zamknęła, wyniki są piękne, a na żywo nie działa.</li>
+    <li>Pierwszy krok zawsze w ChatGPT: rozmowa, plan, potem prompt dla Claude'a — tak jak dziś.</li>
+    <li>Macie pomysł na wskaźnik? Zapiszcie — na lekcji 5 robimy wasze pomysły.</li>
+  </ul></aside>
+</section>
+
+<!-- 18 · PYTANIA -->
+<section class="slide end-slide" data-title="Pytania">
+  <div class="kicker r" style="--i:0">Koniec lekcji 1</div>
+  <h1 class="r" style="--i:1">Pytania?</h1>
+  <div class="todo r" style="--i:2">
+    <div class="todo-h">Na lekcję 2 — start platformy — zainstaluj</div>
+    <div class="todo-list grid2">
+      <div class="td"><img src="img/vscode.svg" alt=""><div><div class="v">VS Code</div><div class="s">darmowy edytor</div><div class="u"><a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com ↗</a></div></div></div>
+      <div class="td"><img src="img/nodejs.svg" alt=""><div><div class="v">Node.js</div><div class="s">wersja LTS</div><div class="u"><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org ↗</a></div></div></div>
+      <div class="td"><span class="two"><img src="img/claude.svg" alt=""><img src="img/openai.svg" alt=""></span><div><div class="v">Claude Code lub Codex</div><div class="s">rozszerzenie w VS Code</div><div class="u"><a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code ↗</a><a href="https://openai.com/codex" target="_blank" rel="noopener">openai.com/codex ↗</a></div></div></div>
+      <div class="td"><img src="img/git.svg" alt=""><div><div class="v">Git</div><div class="s">kopia każdej wersji</div><div class="u"><a href="https://git-scm.com" target="_blank" rel="noopener">git-scm.com ↗</a></div></div></div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Na następne zajęcia: mieć zainstalowane VS Code, Node.js i wybraną AI (rozszerzenie w VS Code).</li>
+    <li>Na lekcji 2 startujemy z platformą, więc przyda się też Git. Linki do pobrania są na slajdzie.</li>
+  </ul></aside>
+</section>
+
+</div>
+</div>
+
+<div class="notes-panel" id="notesPanel"></div>
+<div class="help" id="help">← → / spacja · F pełny ekran · N notatki · P widok prowadzącego</div>
+
+<div class="pv" id="pv">
+  <div>
+    <div class="pv-now" id="pvNow"></div>
+    <div class="pv-title" id="pvTitle"></div>
+    <div class="pv-notes" id="pvNotes"></div>
+  </div>
+  <div class="pv-side">
+    <div class="pv-clock" id="pvClock">00:00<small>czas lekcji</small></div>
+    <div class="pv-btns"><button id="pvPrev">← Wstecz</button><button id="pvNext">Dalej →</button></div>
+    <div class="pv-next" id="pvNextT"></div>
+    <div class="pv-btns"><button id="pvReset">Zeruj czas</button></div>
+  </div>
+</div>
+
+<script src="deck.js"></script>
+<script src="live.js"></script>
+</body>
+</html>

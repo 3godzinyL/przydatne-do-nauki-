@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jak działa Giełda Klubowa — film</title>
+<link rel="stylesheet" href="film.css">
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- 1 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">01 · Jak to działa</div>
+  <h2 class="a" style="--d:.02">Cztery klocki <span class="gold">jednej platformy</span></h2>
+  <div class="body"><div class="chain">
+    <div class="blk box a" style="--d:.28"><img class="ic" src="../deck/img/binance.svg" alt=""><b>Binance</b><span>daje świece</span></div>
+    <div class="flowline a" style="--d:.38"></div>
+    <div class="blk box a" style="--d:.42"><img class="ic" src="../deck/img/nodejs.svg" alt=""><b>Node.js</b><span>serwer + pliki JSON</span></div>
+    <div class="flowline a" style="--d:.54"></div>
+    <div class="blk box a" style="--d:.58"><svg viewBox="0 0 24 24"><path d="M7 3v4M7 16v5M17 5v4M17 15v4"/><rect x="4.5" y="7" width="5" height="9" rx="1"/><rect x="14.5" y="9" width="5" height="6" rx="1" class="f"/></svg><b>Biblioteka</b><span>skale, zoom, mysz</span></div>
+    <div class="flowline a" style="--d:.72"></div>
+    <div class="blk box a" style="--d:.76"><img class="ic" src="../deck/img/rust.svg" alt=""><b>Rust · WebGL2</b><span>karta graficzna</span></div>
+  </div></div>
+</section>
+
+<!-- 2 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">02 · Backend</div>
+  <h2 class="a" style="--d:.02">Node.js zapisuje świece <span class="gold">do plików JSON</span></h2>
+  <div class="body"><div class="s2">
+    <div class="blk box a" style="--d:.06"><img class="ic" src="../deck/img/binance.svg" alt=""><b>Binance API</b><span>REST, bez kluczy</span></div>
+    <div class="wire a" style="--d:.14"><div class="flowline"></div><span class="pkt">1000 świec</span></div>
+    <div class="blk box a" style="--d:.2"><img class="ic" src="../deck/img/nodejs.svg" alt=""><b>Node.js</b><span>server.js</span></div>
+    <div class="wire a" style="--d:.34" ><div class="flowline" style="width:120px;margin:0 auto"></div></div>
+    <div class="folder box a" style="--d:.36">
+      <div class="fh">data/BTCUSDT/</div>
+      <div class="file a" style="--d:.4">1m.json<span>58 KB</span></div>
+      <div class="file a" style="--d:.44">5m.json<span>59 KB</span></div>
+      <div class="file a" style="--d:.48">15m.json<span>60 KB</span></div>
+      <div class="file hot a" style="--d:.52">1h.json<span>60 KB</span></div>
+      <div class="file a" style="--d:.56">4h.json<span>60 KB</span></div>
+      <div class="file a" style="--d:.6">1d.json<span>62 KB</span></div>
+      <div class="plus a" style="--d:.7">+ przy kolejnym otwarciu tylko nowe świece</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 3 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">03 · Format pliku</div>
+  <h2 class="a" style="--d:.02">Jedna świeca = <span class="gold">6 liczb</span></h2>
+  <div class="body"><div class="s3">
+    <svg viewBox="0 0 420 520" class="a" style="--d:.08">
+      <line x1="120" x2="120" y1="30" y2="490" stroke="#2fbf8f" stroke-width="5"/>
+      <rect x="70" y="120" width="100" height="250" rx="4" fill="#2fbf8f"/>
+      <g stroke="#6b5c34" stroke-width="2"><line x1="130" x2="230" y1="30" y2="30"/><line x1="175" x2="230" y1="120" y2="120"/><line x1="175" x2="230" y1="370" y2="370"/><line x1="130" x2="230" y1="490" y2="490"/></g>
+      <text x="240" y="38">maksimum</text><text x="240" y="128">zamknięcie</text><text x="240" y="378">otwarcie</text><text x="240" y="498">minimum</text>
+    </svg>
+    <div>
+      <div class="arr6 a" style="--d:.12">[<b>1795179600000</b>, 61565.58, 61650.7, 61520, 61621.47, 42.8]</div>
+      <div class="rows">
+        <span class="k a" style="--d:.2">czas</span><span class="v a" style="--d:.2">1795179600000 <span class="gold">= 20 lis, 13:00</span></span>
+        <span class="k a" style="--d:.27">otwarcie</span><span class="v a" style="--d:.27">61 565,58</span>
+        <span class="k a" style="--d:.34">maksimum</span><span class="v a" style="--d:.34">61 650,70</span>
+        <span class="k a" style="--d:.41">minimum</span><span class="v a" style="--d:.41">61 520,00</span>
+        <span class="k a" style="--d:.48">zamknięcie</span><span class="v a" style="--d:.48">61 621,47</span>
+        <span class="k a" style="--d:.55">wolumen</span><span class="v a" style="--d:.55">42,80 BTC</span>
+      </div>
+      <div class="weight a" style="--d:.7">bez nazw pól → 1000 świec ≈ <b>60 KB</b></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 4 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">04 · Gotowa biblioteka</div>
+  <h2 class="a" style="--d:.02">Lightweight Charts — <span class="gold">mysz, skale, krzyżyk</span></h2>
+  <div class="body"><div class="s4 box a" style="--d:.06">
+    <div class="frame">
+      <div class="plotwrap"><svg class="plot" data-candles="90,7" viewBox="0 0 1700 544" preserveAspectRatio="none"></svg></div>
+      <div class="yax"><span>63 500</span><span>63 000</span><span>62 500</span><span>62 000</span><span>61 500</span><span>61 000</span></div>
+      <div class="xax"><span>17</span><span>12:00</span><span>18</span><span>12:00</span><span>19</span><span>12:00</span><span>20</span></div>
+      <div class="cross"><i class="h"></i><i class="v"></i></div>
+    </div>
+    <svg class="cursor" viewBox="0 0 24 24"><path d="M4 2l15 11-7 1-3 7z" fill="#f4efe3" stroke="#0e0d0a" stroke-width="1.2"/></svg>
+    <div class="chips">
+      <span class="chip a" style="--d:.42">przesuwanie</span>
+      <span class="chip a" style="--d:.53">przybliżanie</span>
+      <span class="chip a" style="--d:.62">skala ceny</span>
+      <span class="chip a" style="--d:.72">krzyżyk</span>
+    </div>
+  </div></div>
+</section>
+
+<!-- 5 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">05 · Rust</div>
+  <h2 class="a" style="--d:.02">Nasz kod w Rust → <span class="gold">WebAssembly</span></h2>
+  <div class="body"><div class="s5">
+<div class="code box a" style="--d:.06"><span class="cm">// rust/chart-gl/src/lib.rs</span>
+<span class="kw">pub fn</span> <span class="fn">render</span>(&amp;<span class="kw">mut</span> self, from: <span class="ty">f64</span>,
+    to: <span class="ty">f64</span>, x_of_0: <span class="ty">f64</span>, step: <span class="ty">f64</span>,
+    price_a: <span class="ty">f64</span>, price_b: <span class="ty">f64</span>) -&gt; <span class="ty">u32</span> {
+  <span class="kw">let</span> first = from.floor() <span class="kw">as</span> <span class="ty">usize</span>;
+  <span class="cm">// …</span>
+  gl.<span class="fn">draw_arrays_instanced</span>(
+      Gl::TRIANGLES, 0, 12, n);
+}</div>
+    <div class="step a" style="--d:.3"><span>kompilator<br>wasm-pack</span><div class="flowline"></div></div>
+    <div class="wasm box a" style="--d:.36"><img class="ic" src="../deck/img/webassembly.svg" alt=""><b>chart_gl_bg.wasm</b><span>56 KB</span></div>
+    <div class="step a" style="--d:.66"><span>przeglądarka</span><div class="flowline"></div></div>
+    <div class="browser box a" style="--d:.7"><div class="bar"><i></i><i></i><i></i></div><svg data-candles="26,3" viewBox="0 0 320 200" preserveAspectRatio="none"></svg></div>
+  </div></div>
+</section>
+
+<!-- 6 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">06 · WebGL2</div>
+  <h2 class="a" style="--d:.02">Karta graficzna rysuje <span class="gold">wszystko naraz</span></h2>
+  <div class="body"><div class="s6">
+    <div class="gpu">
+      <svg viewBox="0 0 100 100" class="a" style="--d:.06"><g stroke="#6b5c34" stroke-width="3"><path d="M30 8v10M45 8v10M55 8v10M70 8v10M30 82v10M45 82v10M55 82v10M70 82v10M8 30h10M8 45h10M8 55h10M8 70h10M82 30h10M82 45h10M82 55h10M82 70h10"/></g><rect x="18" y="18" width="64" height="64" rx="6" fill="#14120d" stroke="#dfbd68" stroke-width="2.5"/><text x="50" y="57" text-anchor="middle" font-size="17" font-weight="700" fill="#dfbd68" font-family="Segoe UI">GPU</text></svg>
+      <div class="mem a" style="--d:.28"><div class="lbl">pamięć karty: wszystkie świece</div><div class="cells" id="cells"></div></div>
+    </div>
+    <div class="screen box a" style="--d:.5">
+      <div class="cmd">1 polecenie: draw_arrays_instanced(…, <b>184 świece</b>)</div>
+      <svg data-candles="184,11" data-group="all" viewBox="0 0 1100 430" preserveAspectRatio="none"></svg>
+      <div class="stat a" style="--d:.8">czas rysowania ≈ <b>0,1 ms</b> · klatka ma 16 ms</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 7 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">07 · Połączenie</div>
+  <h2 class="a" style="--d:.02">Dwie warstwy, <span class="gold">ta sama klatka</span></h2>
+  <div class="body"><div class="s7">
+    <div class="layers"><div class="tilt">
+      <div class="ly bottom"><svg data-candles="70,5" viewBox="0 0 1000 560" preserveAspectRatio="none"></svg></div>
+      <div class="ly top"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
+        <g stroke="#6b5c34" stroke-width="2"><line x1="900" x2="900" y1="0" y2="560"/><line x1="0" x2="1000" y1="510" y2="510"/></g>
+        <g fill="#cfc2a2" font-size="22" font-family="Consolas"><text x="915" y="90">63 000</text><text x="915" y="220">62 500</text><text x="915" y="350">62 000</text><text x="915" y="480">61 500</text><text x="120" y="545">18</text><text x="420" y="545">19</text><text x="720" y="545">20</text></g>
+        <g stroke="#dfbd68" stroke-width="2" stroke-dasharray="8 8"><line x1="0" x2="900" y1="250" y2="250"/><line x1="560" x2="560" y1="0" y2="510"/></g>
+      </svg></div>
+    </div></div>
+    <div class="side t1 a" style="--d:.42"><b class="gold">Góra: biblioteka</b><span>osie, skale, krzyżyk, obsługa myszy</span></div>
+    <div class="side t2 a" style="--d:.24"><b>Dół: Rust · WebGL2</b><span>świece i wolumen na karcie graficznej</span></div>
+    <div class="sync a" style="--d:.58">co klatkę: numer świecy → X, cena → Y<br><span style="color:var(--ink-3)">dlatego nic się nie rozjeżdża</span></div>
+  </div></div>
+</section>
+
+<!-- 8 -->
+<section class="scene">
+  <div class="kick a" style="--d:0">08 · Na żywo</div>
+  <h2 class="a" style="--d:.02">Zmienia się <span class="gold">tylko ostatnia świeca</span></h2>
+  <div class="body"><div class="s8">
+    <div class="live box a" style="--d:.05">
+      <div class="lh"><i></i>WebSocket Binance · na żywo</div>
+      <svg data-candles="40,9" data-live="1" viewBox="0 0 700 400" preserveAspectRatio="none"></svg>
+      <div class="one a" style="--d:.38">do karty graficznej: <b>1 świeca</b>, nie tysiące</div>
+    </div>
+    <div class="sum box a" style="--d:.56">
+      <div class="h">Jeden prompt — pierwsze zadanie</div>
+      <div class="r"><b>23 min</b><span>pracy AI · 46 zapytań</span></div>
+      <div class="r"><b>1 827</b><span>linii kodu w 15 plikach</span></div>
+      <div class="r"><b>124 572</b><span>tokeny napisane</span></div>
+      <div class="r"><b>7,74 mln</b><span>tokeny przeczytane (97,8% z cache)</span></div>
+      <div class="end a" style="--d:.82">→ <span class="gold">Giełda Klubowa</span></div>
+    </div>
+  </div></div>
+</section>
+
+<div class="cap" id="cap"></div>
+<div class="ctl">
+  <button id="play" title="Odtwórz / pauza (spacja)">▶</button>
+  <span class="nm" id="nm"></span>
+  <div class="chap" id="chap"></div>
+  <span class="tm" id="tm">0:00 / 0:00</span>
+</div>
+<div class="cover" id="cover"><div class="pl"></div><h1>Jak działa <span class="gold">Giełda Klubowa</span></h1><p>film z lektorem · ok. 1:42 · kliknij, aby odtworzyć</p></div>
+</div>
+
+<script src="player.js"></script>
+</body>
+</html>

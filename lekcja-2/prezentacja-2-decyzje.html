@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giełda klubowa — lekcja 2</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="deck">
+<div class="stage" id="stage">
+
+<!-- 1 · TYTUŁ -->
+<section class="slide title-slide" data-title="Start">
+  <div class="kicker r" style="--i:0">Klub · lekcja 2 · Giełda klubowa</div>
+  <h1 class="r" style="--i:1">Giełda klubowa —<br><span class="gold">najważniejsze decyzje<br>na start.</span></h1>
+  <div class="goal r" style="--i:2">
+    <div class="lbl">Cel</div>
+    <p>Wiedzieć, na czym stoi nasza platforma — i dlaczego tak.<br><span>Zanim AI napisze pierwszą linię kodu.</span></p>
+  </div>
+  <div class="agenda4 r" style="--i:3">
+    <div class="ag"><div class="ag-h">Fundament</div><ol><li><span>01</span>Serwer na Node</li><li><span>02</span>Wybór giełd</li></ol></div>
+    <div class="ag"><div class="ag-h">Wykres</div><ol><li><span>03</span>Własny wykres w Rust</li><li><span>04</span>Zoom = inne świece</li></ol></div>
+    <div class="ag"><div class="ag-h">Czego nikt nie widzi</div><ol><li><span>05</span>Krótszy zakres na 1m</li><li><span>06</span>Liczy komputer usera</li><li><span>07</span>Zapis świec</li></ol></div>
+    <div class="ag hot"><div class="ag-h">Testy i AI</div><ol><li><span>08</span>Tester i entry</li><li><span>09</span>Sprawdzanie entry</li><li><span>10</span>AI na krzyż</li></ol></div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Lekcja 1: czego używać i jak. Dziś: na czym stoi nasza giełda klubowa — decyzje, które trzeba podjąć dobrze od początku.</li>
+    <li>Część rzeczy widać od razu (giełdy, wykres). Większość jest ukryta — żaden użytkownik ich nie zauważy, ale bez nich platforma laguje albo kłamie w testach.</li>
+    <li>To nie jest jeszcze kodowanie. To lista rzeczy, które powiemy AI, zanim zacznie pisać.</li>
+  </ul></aside>
+</section>
+
+<!-- 2 · NODE -->
+<section class="slide" data-title="Backend na Node.js — dlaczego">
+  <div class="kicker r" style="--i:0">01 · Backend</div>
+  <h2 class="r" style="--i:1">Serwer na <span class="c-node">Node.js</span> — dlaczego?</h2>
+  <div class="node2">
+    <div class="node-vis r" style="--i:2">
+      <svg viewBox="0 0 900 600" aria-label="Giełdy wysyłają dane do serwera Node, serwer do przeglądarek">
+        <g class="wire">
+          <path id="pe1" d="M126,130 C250,130 290,286 352,292"/>
+          <path id="pe2" d="M126,300 L352,300"/>
+          <path id="pe3" d="M126,470 C250,470 290,314 352,308"/>
+          <path id="pu1" d="M568,300 C690,300 690,80 790,80"/>
+          <path id="pu2" d="M568,300 C690,300 690,168 790,168"/>
+          <path id="pu3" d="M568,300 C690,300 690,256 790,256"/>
+          <path id="pu4" d="M568,300 C690,300 690,344 790,344"/>
+          <path id="pu5" d="M568,300 C690,300 690,432 790,432"/>
+          <path id="pu6" d="M568,300 C690,300 690,520 790,520"/>
+        </g>
+        <g class="tick-dots">
+          <circle r="6"><animateMotion dur="1.3s" repeatCount="indefinite" begin="0s"><mpath href="#pe1"/></animateMotion></circle>
+          <circle r="6"><animateMotion dur="1.3s" repeatCount="indefinite" begin="-0.65s"><mpath href="#pe1"/></animateMotion></circle>
+          <circle r="6"><animateMotion dur="1.1s" repeatCount="indefinite" begin="-0.2s"><mpath href="#pe2"/></animateMotion></circle>
+          <circle r="6"><animateMotion dur="1.1s" repeatCount="indefinite" begin="-0.75s"><mpath href="#pe2"/></animateMotion></circle>
+          <circle r="6"><animateMotion dur="1.5s" repeatCount="indefinite" begin="-0.4s"><mpath href="#pe3"/></animateMotion></circle>
+          <circle r="6"><animateMotion dur="1.5s" repeatCount="indefinite" begin="-1.1s"><mpath href="#pe3"/></animateMotion></circle>
+        </g>
+        <g class="out-dots">
+          <circle r="5"><animateMotion dur="1.6s" repeatCount="indefinite" begin="-0.1s"><mpath href="#pu1"/></animateMotion></circle>
+          <circle r="5"><animateMotion dur="1.6s" repeatCount="indefinite" begin="-0.9s"><mpath href="#pu2"/></animateMotion></circle>
+          <circle r="5"><animateMotion dur="1.6s" repeatCount="indefinite" begin="-0.4s"><mpath href="#pu3"/></animateMotion></circle>
+          <circle r="5"><animateMotion dur="1.6s" repeatCount="indefinite" begin="-1.3s"><mpath href="#pu4"/></animateMotion></circle>
+          <circle r="5"><animateMotion dur="1.6s" repeatCount="indefinite" begin="-0.6s"><mpath href="#pu5"/></animateMotion></circle>
+          <circle r="5"><animateMotion dur="1.6s" repeatCount="indefinite" begin="-1.1s"><mpath href="#pu6"/></animateMotion></circle>
+        </g>
+        <g class="ex-node">
+          <circle cx="80" cy="130" r="46"/><image href="img/binance.svg" x="56" y="106" width="48" height="48"/>
+          <circle cx="80" cy="300" r="46"/><image href="img/mexc.svg" x="54" y="284" width="52" height="32"/>
+          <circle cx="80" cy="470" r="46"/><image href="img/hyperliquid.svg" x="54" y="444" width="52" height="52"/>
+          <text x="80" y="200">Binance</text><text x="80" y="370">MEXC</text><text x="80" y="540">Hyperliquid</text>
+        </g>
+        <text class="wire-lbl" x="236" y="282">WebSocket</text>
+        <text class="wire-lbl out" x="640" y="290">JSON</text>
+        <circle class="loop" cx="460" cy="300" r="134">
+          <animateTransform attributeName="transform" type="rotate" from="0 460 300" to="360 460 300" dur="7s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="hub" cx="460" cy="300" r="108"/>
+        <image href="img/nodejs.svg" x="430" y="222" width="60" height="60"/>
+        <text class="hub-t" x="460" y="322">Node.js</text>
+        <text class="hub-s" x="460" y="352">nic nie czeka</text>
+        <text class="loop-lbl" x="460" y="462">pętla zdarzeń</text>
+        <g class="users">
+          <text class="users-h" x="819" y="34">użytkownicy</text>
+          <g transform="translate(790,80)"><rect x="0" y="-20" width="58" height="38" rx="5"/><path d="M20,24 h18"/></g>
+          <g transform="translate(790,168)"><rect x="0" y="-20" width="58" height="38" rx="5"/><path d="M20,24 h18"/></g>
+          <g transform="translate(790,256)"><rect x="0" y="-20" width="58" height="38" rx="5"/><path d="M20,24 h18"/></g>
+          <g transform="translate(790,344)"><rect x="0" y="-20" width="58" height="38" rx="5"/><path d="M20,24 h18"/></g>
+          <g transform="translate(790,432)"><rect x="0" y="-20" width="58" height="38" rx="5"/><path d="M20,24 h18"/></g>
+          <g transform="translate(790,520)"><rect x="0" y="-20" width="58" height="38" rx="5"/><path d="M20,24 h18"/></g>
+        </g>
+      </svg>
+    </div>
+    <ul class="pc node-pc r" style="--i:3">
+      <li class="plus"><b>Jeden język z frontem</b> — JavaScript / TypeScript wszędzie, AI pisze spójnie</li>
+      <li class="plus"><b>Nie czeka</b> — tysiące połączeń WebSocket naraz, idealny do danych na żywo</li>
+      <li class="plus"><b>JSON w naturze</b> — giełdy odpowiadają w JSON, Node czyta go bez tłumaczenia</li>
+      <li class="plus"><b>npm</b> — gotowe paczki i biblioteki giełd</li>
+      <li class="plus"><b>npm install i działa</b> — na każdym komputerze i serwerze</li>
+      <li class="plus"><b>Rust dokładamy</b> tam, gdzie liczenie jest ciężkie</li>
+    </ul>
+  </div>
+  <aside class="notes"><ul>
+    <li>Backend = serwer: pobiera świece z giełd, zapisuje je, liczy, wysyła do przeglądarek.</li>
+    <li>Node jest stworzony do sieci: nie czeka na odpowiedź jednej giełdy, tylko obsługuje wszystko naraz (pętla zdarzeń). Giełdy wysyłają ceny na żywo przez WebSocket — Node trzyma tysiące takich połączeń.</li>
+    <li>Ten sam język co front — AI nie przełącza się między dwoma światami, mniej błędów na styku.</li>
+    <li>Giełdy mówią JSON-em, a JSON to natywny format JavaScriptu.</li>
+    <li>Uczciwie: Node ma jeden główny wątek. Jedno ciężkie liczenie potrafi zatrzymać wszystkich — o tym slajd 05. Dlatego ciężkie rzeczy dajemy do Rusta albo na komputer użytkownika.</li>
+  </ul></aside>
+</section>
+
+<!-- 3 · GIEŁDY -->
+<section class="slide" data-title="Wybór giełd">
+  <div class="kicker r" style="--i:0">02 · Giełdy</div>
+  <h2 class="r" style="--i:1">Trzy giełdy — <span class="gold">każda do czego innego</span></h2>
+  <div class="ex3">
+    <div class="exc r" style="--i:2">
+      <div class="exc-h"><img src="img/binance.svg" alt=""><span class="v">Binance</span><span class="tag">Historia</span></div>
+      <div class="exc-big">od 2017</div>
+      <div class="exc-sub">najdłuższy zakres dat — BTC co minutę od 17.08.2017</div>
+      <div class="bars">
+        <div class="bars-h">Historia świec 1m</div>
+        <div class="brow win"><span class="n">Binance</span><span class="b"><i style="--w:100%"></i></span><span class="val">9 lat</span></div>
+        <div class="brow"><span class="n">MEXC</span><span class="b"><i style="--w:1%"></i></span><span class="val">~30 dni</span></div>
+        <div class="brow"><span class="n">Hyperliquid</span><span class="b"><i style="--w:.5%"></i></span><span class="val">~3,5 dnia</span></div>
+      </div>
+      <div class="exc-use"><span>Używamy do</span>testów na długiej historii</div>
+    </div>
+    <div class="exc r" style="--i:3">
+      <div class="exc-h"><img src="img/mexc.svg" alt="" class="wide"><span class="v">MEXC</span><span class="tag">Symbole</span></div>
+      <div class="exc-big">1100+</div>
+      <div class="exc-sub">kontraktów USDT — także małe monety, których nie ma gdzie indziej</div>
+      <div class="bars">
+        <div class="bars-h">Kontrakty perpetual · 11.11.2026</div>
+        <div class="brow win"><span class="n">MEXC</span><span class="b"><i style="--w:100%"></i></span><span class="val">~1100</span></div>
+        <div class="brow"><span class="n">Binance</span><span class="b"><i style="--w:51%"></i></span><span class="val">~565</span></div>
+        <div class="brow"><span class="n">Hyperliquid</span><span class="b"><i style="--w:16%"></i></span><span class="val">~180</span></div>
+      </div>
+      <div class="exc-use"><span>Używamy do</span>skanera wielu monet naraz</div>
+    </div>
+    <div class="exc r" style="--i:4">
+      <div class="exc-h"><img src="img/hyperliquid.svg" alt=""><span class="v">Hyperliquid</span><span class="tag">Boty</span></div>
+      <div class="exc-big">API w UE</div>
+      <div class="exc-sub">w Unii boty nadal mogą handlować przez API</div>
+      <div class="eu">
+        <svg viewBox="0 0 200 200" aria-hidden="true" class="eu-ring">
+          <g class="stars"></g>
+          <g class="bot" transform="translate(100,104)">
+            <rect x="-34" y="-26" width="68" height="52" rx="12"/>
+            <path d="M0,-26 v-14"/><circle cx="0" cy="-44" r="5"/>
+            <circle class="eye" cx="-13" cy="-4" r="6"/><circle class="eye" cx="13" cy="-4" r="6"/>
+            <path d="M-12,12 h24"/>
+          </g>
+        </svg>
+        <ul class="pc eu-pc">
+          <li class="ok"><b>Klucz API</b> handluje</li>
+          <li class="bad"><b>Klucz API</b> nie wypłaci środków</li>
+          <li class="ok"><b>Bot</b> działa 24/7</li>
+        </ul>
+      </div>
+      <div class="exc-use"><span>Używamy do</span>bota, który sam handluje</div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Nie ma jednej idealnej giełdy — każdą bierzemy do tego, w czym jest najlepsza.</li>
+    <li>Binance: najdłuższy zakres dat. BTCUSDT spot ma świece 1-minutowe od 17 sierpnia 2017, futures od września 2019. Do testów strategii potrzebujemy lat, nie tygodni.</li>
+    <li>MEXC: ma naprawdę wiele symboli — ok. 1100 kontraktów USDT (sprawdzone 11.11). Idealny do skanera. Ale świeczki 1m trzyma tylko ok. 30 dni — stąd podział ról.</li>
+    <li>Hyperliquid: w Unii nadal obsługuje API do botów. Klucz API (tzw. agent) może handlować, ale nie może wypłacić pieniędzy — bezpieczniej. Historia 1m tylko ok. 3,5 dnia (5000 ostatnich świec).</li>
+    <li>Wszystkie trzy dają publiczne dane za darmo, bez konta.</li>
+  </ul></aside>
+</section>
+
+<!-- 4 · WYKRES: BIBLIOTEKA → RUST (2 kroki) -->
+<section class="slide" data-title="Wykres — gotowa biblioteka → własny w Rust" data-steps="2">
+  <div class="kicker r" style="--i:0">03 · Wykres</div>
+  <div class="swap-h r" style="--i:1">
+    <h2 class="ph ph-a">Standardowo: <span class="muted">gotowa biblioteka</span></h2>
+    <h2 class="ph ph-b">Dlatego: <span class="c-rust">własny wykres w Rust</span></h2>
+  </div>
+  <div class="swap r" style="--i:2">
+    <div class="ph ph-a">
+      <div class="flow3">
+        <div class="panel tbl">
+          <div class="panel-h"><b>dane.json</b></div>
+          <table>
+            <tr><th>czas</th><th>open</th><th>close</th></tr>
+            <tr><td>14:00</td><td>101 250</td><td>101 280</td></tr>
+            <tr><td>14:01</td><td>101 280</td><td>101 233</td></tr>
+            <tr><td>14:02</td><td>101 233</td><td>101 310</td></tr>
+            <tr><td>14:03</td><td>101 310</td><td>101 296</td></tr>
+            <tr><td>14:04</td><td>101 296</td><td>101 342</td></tr>
+            <tr class="more"><td colspan="3">… 43 200 wierszy</td></tr>
+          </table>
+        </div>
+        <div class="ar">→</div>
+        <div class="libbox"><div class="t">chart-lib.js</div><div class="s">gotowa biblioteka<br>z internetu</div></div>
+        <div class="ar">→</div>
+        <div class="panel chart-p">
+          <div class="panel-h"><b>BTCUSDT</b><span>1m</span><span class="rt"><span id="libCount">0</span> elementów · <b id="libFps" class="fps">60 FPS</b></span></div>
+          <div class="cv-box"><canvas class="cv" id="libChart"></canvas></div>
+        </div>
+      </div>
+      <div class="cons">
+        <ul class="pc">
+          <li class="minus"><b>Laguje</b> przy dużej liczbie świec</li>
+          <li class="minus"><b>Tylko to, co przewidział autor</b> biblioteki</li>
+          <li class="minus"><b>Własny wskaźnik</b> = obejścia i łatki</li>
+        </ul>
+        <div class="locks">
+          <span><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Własne rysowanie</span>
+          <span><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Własny zoom</span>
+          <span><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Wygląd świec</span>
+        </div>
+      </div>
+    </div>
+    <div class="ph ph-b">
+      <div class="flow3 own">
+        <div class="stepbox"><div class="t">Świece</div><div class="s">rekordy OHLC<br>z serwera</div></div>
+        <div class="ar">→</div>
+        <div class="stepbox rust"><div class="ico2"><img src="img/rust.svg" alt=""><img src="img/webassembly.svg" alt=""></div><div class="t">Rust → WASM</div><div class="s">silnik wykresu</div></div>
+        <div class="ar">→</div>
+        <div class="panel chart-p own-p">
+          <div class="panel-h"><b>OHLC → WebGL2</b><span id="ownMode">rysowanie klatki</span><span class="rt">jeden canvas</span></div>
+          <div class="cv-box"><canvas class="cv" id="ownChart"></canvas></div>
+        </div>
+      </div>
+      <div class="cons">
+        <ul class="pc">
+          <li class="plus"><b>Świece zostają rekordami OHLC</b> — nie plikami graficznymi</li>
+          <li class="plus"><b>WebGL2 rysuje wykres na canvasie</b> — ekran pokazuje piksele</li>
+          <li class="plus"><b>Własny silnik</b> daje kontrolę nad wyglądem i zachowaniem wykresu</li>
+        </ul>
+        <div class="lupa-note"><span class="lupa-ico"></span>Piksele są wynikiem renderowania; źródłem pozostają dane OHLC</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li><b>Krok 1.</b> Standardowo bierze się gotową bibliotekę wykresów: dajesz jej tabelkę z danymi, ona rysuje. Na start wygodne.</li>
+    <li>Ale każda świeca to osobny element do policzenia i narysowania. Przy dziesiątkach tysięcy świec wszystko zaczyna lagować — patrzcie na licznik FPS.</li>
+    <li>I nie zrobisz nic, czego autor nie przewidział: własne rysowanie, własny zoom, własny wygląd świec — zablokowane albo przez łatki.</li>
+    <li><b>Krok 2</b> (strzałka): własny silnik wykresu działa w Rust skompilowanym do WebAssembly.</li>
+    <li>Do silnika trafia seria rekordów OHLC. WebGL2 renderuje wykres na canvasie, a ekran pokazuje wynik w postaci pikseli.</li>
+    <li>Nie mów, że świece są osobnymi obrazami ani że przy panowaniu przesuwamy gotową bitmapę. Repozytorium potwierdza serię OHLC i renderowanie WebGL2, ale nie udostępnia źródeł Rust silnika, które pozwoliłyby potwierdzić szczegóły jego cache’u.</li>
+    <li>Animacja na slajdzie jest schematyczna; nie uruchamia silnika produkcyjnego ani nie pokazuje pomiaru FPS.</li>
+    <li>Powiększenie pokazuje piksele powstałe podczas renderowania, nie osobny obraz źródłowy świecy.</li>
+  </ul></aside>
+</section>
+
+<!-- 5 · ZOOM -->
+<section class="slide" data-title="Zoom — inne, większe świece">
+  <div class="kicker r" style="--i:0">04 · Optymalizacja</div>
+  <h2 class="r" style="--i:1">Oddalasz — <span class="gold">świece się łączą</span></h2>
+  <div class="zoom">
+    <div class="panel zoom-p r" style="--i:2">
+      <div class="panel-h"><img src="img/coin-btc.svg" alt="" class="hico"><b>BTCUSDT</b><span>widać: <b id="zSpan">2 h</b></span><span class="rt">1 świeca = <b id="zTf" class="gold">1m</b></span></div>
+      <div class="cv-box"><canvas class="cv" id="zoomChart"></canvas></div>
+    </div>
+    <div class="zoom-side r" style="--i:3">
+      <div class="lbl-up">Gotowe poziomy</div>
+      <ol class="lod" id="zLod">
+        <li data-l="1"><b>1m</b><span>z bliska</span></li>
+        <li data-l="5"><b>5m</b></li>
+        <li data-l="15"><b>15m</b></li>
+        <li data-l="60"><b>1h</b></li>
+        <li data-l="240"><b>4h</b><span>z daleka</span></li>
+      </ol>
+      <div class="zstat"><b id="zDrawn">120</b><span>świec rysujemy</span></div>
+      <div class="zstat dim"><b id="zRaw">120</b><span>świec 1m w tym widoku</span></div>
+    </div>
+  </div>
+  <p class="foot-line r" style="--i:4">Jak mapa w telefonie: z daleka mniej szczegółów, z bliska więcej — <b>na ekranie zawsze najwyżej ok. 150 świec.</b></p>
+  <aside class="notes"><ul>
+    <li>Kolejna optymalizacja na tych „zdjęciach”: gdy wykres jest mocno odsunięty, nie rysujemy tysięcy maleńkich świec 1m — podmieniamy je na większe (5m, 15m, 1h, 4h).</li>
+    <li>Przybliżasz — większe świece rozpadają się z powrotem na drobne. Użytkownik widzi płynny zoom, a my rysujemy zawsze podobną liczbę świec.</li>
+    <li>Większe świece liczymy raz i trzymamy gotowe — jak kafelki mapy na różnych przybliżeniach.</li>
+    <li>Licznik po prawej: ile świec rysujemy naprawdę (najwyżej ok. 150), a ile 1-minutowych mieści się w widoku.</li>
+  </ul></aside>
+</section>
+
+<!-- 6 · KRÓTSZY ZAKRES NA 1M (2 kroki) -->
+<section class="slide" data-title="Ukryte: krótszy zakres na 1m" data-steps="2">
+  <div class="kicker r" style="--i:0">05 · Czego user nie widzi</div>
+  <h2 class="r" style="--i:1">Na 1m — <span class="gold">krótszy zakres dat</span></h2>
+  <div class="lim">
+    <div class="lim-left r" style="--i:2">
+      <div class="lbl-up">Użytkownik prosi o</div>
+      <div class="lim-q"><b class="gold">1m</b> + ciężki wskaźnik</div>
+      <div class="lim-range"><span class="sw sw-a c-no">zakres: cały rok</span><span class="sw sw-b gold">zakres: ostatnie 30 dni</span></div>
+      <div class="lim-num"><b class="sw sw-a c-no">525 600</b><b class="sw sw-b gold">43 200</b><span>świec do policzenia</span></div>
+      <div class="lim-warn sw sw-a">Node ma <b>jeden wątek</b>. Jedno ciężkie liczenie — <b>wszyscy czekają.</b></div>
+      <table class="lim-tab sw sw-b">
+        <tr><th>interwał</th><th>zakres</th><th>świec</th></tr>
+        <tr class="hl"><td>1m</td><td>30 dni</td><td>43 200</td></tr>
+        <tr><td>5m</td><td>1 rok</td><td>105 120</td></tr>
+        <tr><td>1h</td><td>4 lata</td><td>35 064</td></tr>
+        <tr><td>1d</td><td>od 2017</td><td>~3 400</td></tr>
+      </table>
+    </div>
+    <div class="panel lim-p r" style="--i:3">
+      <div class="panel-h"><img src="img/nodejs.svg" alt="" class="hico"><b>Serwer · jeden wątek</b><span class="rt">średnia odpowiedź: <b id="limWait">—</b></span></div>
+      <div class="cv-box"><canvas class="cv" id="limChart"></canvas></div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Rzecz, której żaden użytkownik nie zobaczy na pierwszy rzut oka.</li>
+    <li><b>Krok 1.</b> Ktoś włącza 1m, cały rok i ciężki wskaźnik: 525 600 świec. Node ma jeden główny wątek — dopóki to liczy, nikt inny nie dostaje odpowiedzi. Czerwony blok na wątku = wszyscy w kolejce.</li>
+    <li><b>Krok 2</b> (strzałka): na 1m dajemy mniejszy zakres daty, np. 30 dni = 43 200 świec, 12 razy mniej pracy. Kolejka znika.</li>
+    <li>Na większych interwałach zakres może być dłuższy, bo świec jest mniej — tabelka to przykład naszych limitów.</li>
+    <li>Użytkownik nawet nie wie, że jest limit — wykres działa, a serwer żyje.</li>
+  </ul></aside>
+</section>
+
+<!-- 7 · LICZY KOMPUTER UŻYTKOWNIKA -->
+<section class="slide" data-title="Ciężkie liczenie u użytkownika — WASM i WebGL">
+  <div class="kicker r" style="--i:0">06 · Ciężkie liczenie</div>
+  <h2 class="r" style="--i:1">Liczy <span class="gold">komputer użytkownika</span>, nie serwer</h2>
+  <div class="cmp">
+    <div class="cmp-col bad r" style="--i:2">
+      <div class="cmp-h"><span class="tag no">Źle</span>Serwer liczy wszystko za wszystkich</div>
+      <div class="srv hot"><img src="img/nodejs.svg" alt=""><b>Serwer</b><span class="gauge"><i style="--g:100%"></i></span><span class="pct c-no">100%</span></div>
+      <div class="users6">
+        <div class="u wait"><div class="scr"><span class="spin"></span></div><span class="lb">czeka…</span></div>
+        <div class="u wait"><div class="scr"><span class="spin"></span></div><span class="lb">czeka…</span></div>
+        <div class="u wait"><div class="scr"><span class="spin"></span></div><span class="lb">czeka…</span></div>
+        <div class="u wait"><div class="scr"><span class="spin"></span></div><span class="lb">czeka…</span></div>
+        <div class="u wait"><div class="scr"><span class="spin"></span></div><span class="lb">czeka…</span></div>
+        <div class="u wait"><div class="scr"><span class="spin"></span></div><span class="lb">czeka…</span></div>
+      </div>
+    </div>
+    <div class="cmp-col good r" style="--i:3">
+      <div class="cmp-h"><span class="tag ok">Dobrze</span>Serwer wysyła świece — liczy przeglądarka</div>
+      <div class="srv"><img src="img/nodejs.svg" alt=""><b>Serwer</b><span class="gauge"><i style="--g:8%"></i></span><span class="pct c-node">8%</span></div>
+      <div class="users6">
+        <div class="u calc"><div class="scr"><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="lb"><em>WASM</em><em>WebGL</em></span></div>
+        <div class="u calc"><div class="scr"><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="lb"><em>WASM</em><em>WebGL</em></span></div>
+        <div class="u calc"><div class="scr"><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="lb"><em>WASM</em><em>WebGL</em></span></div>
+        <div class="u calc"><div class="scr"><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="lb"><em>WASM</em><em>WebGL</em></span></div>
+        <div class="u calc"><div class="scr"><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="lb"><em>WASM</em><em>WebGL</em></span></div>
+        <div class="u calc"><div class="scr"><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="lb"><em>WASM</em><em>WebGL</em></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="gpu-row r" style="--i:4">
+    <div class="g"><img src="img/rust.svg" alt=""><img src="img/webassembly.svg" alt=""><p><b>Rust → WASM</b> wskaźniki liczy procesor użytkownika</p></div>
+    <div class="g"><span class="gl">GL</span><p><b>WebGL</b> karta graficzna rysuje i liczy tysiące świec naraz</p></div>
+    <div class="g"><span class="gl n">100</span><p><b>100 osób = 100 komputerów</b> do liczenia, a serwer jeden</p></div>
+  </div>
+  <div class="caveat r" style="--i:5"><b>Wyjątek:</b> alerty i bot liczy zawsze serwer — przeglądarka może być zamknięta.</div>
+  <aside class="notes"><ul>
+    <li>Wskaźniki: przez to, że mamy Node i Rusta, część ciężkich obliczeń przenosimy na stronę użytkownika.</li>
+    <li>Serwer wysyła tylko świece (raz, z dysku), a wskaźnik liczy już przeglądarka: Rust skompilowany do WebAssembly na procesorze, WebGL na karcie graficznej.</li>
+    <li>Ten sam kod Rust może działać na serwerze i w przeglądarce — piszemy go raz.</li>
+    <li>Efekt: 100 użytkowników to 100 komputerów do liczenia. Serwer prawie się nie poci.</li>
+    <li>Wyjątek: alerty, skaner i bot muszą działać, gdy nikt nie patrzy — to liczy serwer.</li>
+  </ul></aside>
+</section>
+
+<!-- 8 · ZAPIS ŚWIEC -->
+<section class="slide" data-title="Zapis świec — mądry podział JSON-ów">
+  <div class="kicker r" style="--i:0">07 · Zapis świec</div>
+  <h2 class="r" style="--i:1">Mądry podział plików — <span class="gold">wykres od razu</span></h2>
+  <div class="js8">
+    <div class="js-left r" style="--i:2">
+      <div class="panel tree"><pre><span class="d">data/</span>
+└─ <span class="d">swiece/</span>
+   └─ <span class="d">binance/</span>
+      └─ <span class="d">BTCUSDT/</span>
+         └─ <span class="d">1m/</span>
+            ├─ <span class="tf">2026-09.json</span>  <span class="c">zamknięty</span>
+            ├─ <span class="tf">2026-10.json</span>  <span class="c">zamknięty</span>
+            ├─ <span class="tf">2026-11.json</span>  <span class="g">← dopisujemy</span>
+            └─ <span class="tf">meta.json</span>     <span class="c">od–do, luki</span></pre></div>
+      <div class="row-ex">
+        <div class="lbl-up">1 świeca = krótka tablica</div>
+        <code>[1762819200000,101250.5,101300,101200.1,101280,12.4]</code>
+        <div class="s">czas · open · high · low · close · wolumen</div>
+      </div>
+    </div>
+    <div class="panel js-p r" style="--i:3">
+      <div class="panel-h"><b>Otwieranie wykresu</b><span class="rt">przykład · <b id="jsT">0,0 s</b></span></div>
+      <div class="cv-box"><canvas class="cv" id="jsonChart"></canvas></div>
+    </div>
+  </div>
+  <ul class="fast4 r" style="--i:4">
+    <li><b>Najpierw najnowszy plik</b> — prawy koniec wykresu od razu</li>
+    <li><b>Zamknięte miesiące</b> się nie zmieniają — cache na zawsze</li>
+    <li><b>Dopisujemy</b> tylko do ostatniego pliku</li>
+    <li><b>Zapis przez plik tymczasowy</b> — zgaśnie prąd, plik cały</li>
+  </ul>
+  <aside class="notes"><ul>
+    <li>Rzecz niewidoczna, a decyduje o szybkości: jak zapisujemy świece na dysku.</li>
+    <li>Jeden wielki plik = przy każdym otwarciu czytasz wszystko, zanim cokolwiek pokażesz. Podział na giełdę / symbol / interwał / miesiąc = czytasz tylko to, co potrzebne.</li>
+    <li>Najpierw ładujemy najnowszy miesiąc — użytkownik od razu widzi aktualny prawy koniec wykresu. Starsza historia dociąga się w tle, w lewo.</li>
+    <li>Zamknięte miesiące się nie zmieniają — przeglądarka może je trzymać w cache na zawsze. Dopisujemy tylko do bieżącego pliku.</li>
+    <li>meta.json mówi, od kiedy do kiedy mamy dane i gdzie są luki — bez otwierania świec.</li>
+    <li>Świeca jako krótka tablica zamiast obiektu z nazwami pól — plik nawet 2 razy mniejszy.</li>
+    <li>Zapis zawsze do pliku tymczasowego, potem podmiana. Jak zgaśnie prąd w trakcie zapisu, stary plik zostaje cały.</li>
+  </ul></aside>
+</section>
+
+<!-- 9 · TESTER I ENTRY -->
+<section class="slide" data-title="Tester parametrów i Deep Test — jak liczyć entry">
+  <div class="kicker r" style="--i:0">08 · Testy</div>
+  <h2 class="r" style="--i:1">Tester i Deep Test — <span class="gold">jak liczyć entry</span></h2>
+  <div class="tests2 r" style="--i:2">
+    <div class="tcard"><div class="heat" id="heat"></div><div><div class="t">Tester parametrów</div><div class="d">setki ustawień naraz → mapa wyników<br><span class="mono gold">długość 10–50 × stop 1–3%</span></div></div></div>
+    <div class="tcard"><svg class="eq" viewBox="0 0 200 90" aria-hidden="true"><path class="eq-l" d="M4,74 L22,70 L36,72 L50,60 L64,63 L80,52 L94,56 L110,44 L124,47 L140,36 L156,40 L172,26 L196,18"/></svg><div><div class="t">Deep Test</div><div class="d">jedno ustawienie, każda transakcja po kolei: entry, wyjście, fee, poślizg, saldo</div></div></div>
+  </div>
+  <div class="methods-h r" style="--i:3">Entry można liczyć na kilka sposobów — <b>zawsze dopisz, który masz na myśli</b></div>
+  <div class="methods r" style="--i:3">
+    <div class="m">
+      <svg viewBox="0 0 400 150" aria-hidden="true">
+        <g class="cdl up"><line x1="150" y1="22" x2="150" y2="128"/><rect x="136" y="44" width="28" height="64"/></g>
+        <g class="cdl dn"><line x1="246" y1="34" x2="246" y2="100"/><rect x="232" y="46" width="28" height="36"/></g>
+        <line class="cls" x1="198" y1="10" x2="198" y2="140"/>
+        <circle class="pt warn" cx="164" cy="44" r="8"/>
+        <text class="pt-l warn" x="88" y="50">close?</text>
+      </svg>
+      <div class="t">Close świecy sygnału</div>
+      <div class="d">cenę close znasz dopiero, gdy świeca się skończy</div>
+    </div>
+    <div class="m">
+      <svg viewBox="0 0 400 150" aria-hidden="true">
+        <g class="cdl up"><line x1="150" y1="22" x2="150" y2="128"/><rect x="136" y="44" width="28" height="64"/></g>
+        <g class="cdl dn"><line x1="246" y1="34" x2="246" y2="100"/><rect x="232" y="46" width="28" height="36"/></g>
+        <line class="cls" x1="198" y1="10" x2="198" y2="140"/>
+        <line class="lvl" x1="90" y1="92" x2="300" y2="92"/>
+        <circle class="pt warn" cx="246" cy="92" r="8"/>
+        <text class="pt-l warn" x="346" y="80">H czy L</text>
+        <text class="pt-l warn" x="346" y="102">najpierw?</text>
+      </svg>
+      <div class="t">Dotknięcie poziomu w świecy</div>
+      <div class="d">kolejność ruchu w środku świecy to symulacja</div>
+    </div>
+    <div class="m best">
+      <svg viewBox="0 0 400 150" aria-hidden="true">
+        <g class="cdl up"><line x1="110" y1="22" x2="110" y2="128"/><rect x="96" y="44" width="28" height="64"/></g>
+        <g class="cdl dn"><line x1="206" y1="34" x2="206" y2="100"/><rect x="192" y="46" width="28" height="36"/></g>
+        <line class="cls ok" x1="158" y1="10" x2="158" y2="132"/>
+        <text class="cls-l" x="158" y="147">zamknięta</text>
+        <circle class="pt ok" cx="192" cy="46" r="8"/>
+        <text class="pt-l ok" x="262" y="52">OPEN</text>
+      </svg>
+      <div class="t">Zamknięcie → OPEN nowej świecy</div>
+      <div class="d">najrealniej — tak samo zrobi bot na żywo</div>
+      <div class="chips"><span>+ fee</span><span>+ poślizg</span></div>
+    </div>
+  </div>
+  <div class="ask r" style="--i:4">
+    <span>Tak to piszę do AI:</span>
+    <span class="q">„Sygnał licz tylko na zamkniętej świecy. Wejście po cenie OPEN następnej świecy. Fee 0,05% przy wejściu i wyjściu, poślizg 0,02%. Nie używaj żadnej świecy z przyszłości.”</span>
+  </div>
+  <aside class="notes"><ul>
+    <li>Tester parametrów: sprawdza setki ustawień naraz (np. długość średniej × wielkość stopa) i pokazuje mapę wyników. Deep Test: jedno ustawienie, każda transakcja po kolei — z fee, poślizgiem i saldem.</li>
+    <li>Jak to wytłumaczyć AI? Najważniejsze jest entry. Są różne metody liczenia entry i każda daje inny wynik — dlatego zawsze rozpisz, co masz na myśli.</li>
+    <li>Close świecy sygnału: kusi, ale cenę close znasz dopiero po zamknięciu — na żywo już jej nie złapiesz.</li>
+    <li>Dotknięcie poziomu w środku świecy: nie wiemy, czy cena najpierw poszła w górę, czy w dół. Intrabar to symulacja, nie zapis ticków.</li>
+    <li>Najlepiej i najrealniej: czekamy na zamknięcie świecy i na nowej świecy wchodzimy od ceny startu (OPEN). Tak samo zachowa się bot na żywo.</li>
+    <li>Zawsze uwzględnij fee (przy wejściu i wyjściu) i poślizg. Liczby w prompcie to przykład — wpisujemy fee naszej giełdy.</li>
+  </ul></aside>
+</section>
+
+<!-- 10 · SPRAWDZANIE ENTRY LINIĄ -->
+<section class="slide" data-title="Jak sprawdzam, czy AI dobrze liczy entry">
+  <div class="kicker r" style="--i:0">09 · Sprawdzam AI</div>
+  <h2 class="r" style="--i:1">Czy kod bierze entry <span class="gold">z dobrego miejsca?</span></h2>
+  <div class="chk">
+    <div class="panel chk-p r" style="--i:2">
+      <div class="panel-h"><img src="img/coin-btc.svg" alt="" class="hico"><b>BTCUSDT</b><span>1h · transakcje z Deep Testu na wykresie</span><span class="rt" id="chkCount">0 / 5</span></div>
+      <div class="cv-box"><canvas class="cv" id="chkChart"></canvas></div>
+    </div>
+    <div class="chk-side r" style="--i:3">
+      <ol class="chk-steps">
+        <li><span>1</span><div><b>Kod zwraca transakcje</b>numer świecy + cena entry</div></li>
+        <li><span>2</span><div><b>Rysuję linię</b>od faktycznego entry — sygnału na wykresie — do entry z kodu</div></li>
+        <li><span>3</span><div><b>Linia kończy się na OPEN następnej świecy?</b>Wtedy mam 100% pewności</div></li>
+      </ol>
+      <div class="legend">
+        <div class="ok"><i></i>entry z OPEN nowej świecy</div>
+        <div class="bad"><i></i>entry z knota albo wcześniej — kod zna przyszłość</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Najczęściej tak sprawdzam, czy AI dobrze liczy entry: nie po wyniku, tylko po tym, czy kod bierze entry z dobrych miejsc.</li>
+    <li>Kod oddaje listę transakcji: numer świecy i cenę wejścia. Wyświetlam to na wykresie i rysuję linię od faktycznego entry — zamknięcia świecy sygnału — do entry, które policzył kod.</li>
+    <li>Dobrze: linia zawsze kończy się dokładnie na OPEN następnej świecy. Widzę to od razu, przy każdej transakcji — i mam 100% pewności.</li>
+    <li>Źle (czerwona): linia skacze do knota albo do wcześniejszej świecy. Kod wziął najlepszą cenę, której na żywo nigdy byśmy nie dostali — wynik testu jest piękny i fałszywy.</li>
+    <li>Wynik procentowy niczego nie dowodzi. Linia na wykresie — tak.</li>
+  </ul></aside>
+</section>
+
+<!-- 11 · AI NA KRZYŻ -->
+<section class="slide" data-title="Jaka AI — sprawdzają się nawzajem">
+  <div class="kicker r" style="--i:0">10 · Jaką AI</div>
+  <h2 class="r" style="--i:1">Dwie AI <span class="gold">sprawdzają się nawzajem</span></h2>
+  <div class="xai">
+    <div class="xai-vis r" style="--i:2">
+      <svg viewBox="0 0 900 440" aria-label="Claude pisze, Codex sprawdza i odwrotnie">
+        <path id="arcTop" class="arc" d="M240,170 C360,40 540,40 660,170"/>
+        <path id="arcBot" class="arc" d="M660,270 C540,400 360,400 240,270"/>
+        <path class="arc-head" d="M660,170 l-26,-6 l14,-18 z"/>
+        <path class="arc-head" d="M240,270 l26,6 l-14,18 z"/>
+        <circle r="7" class="dot-c"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#arcTop"/></animateMotion></circle>
+        <circle r="7" class="dot-o"><animateMotion dur="2.6s" repeatCount="indefinite" begin="-1.3s"><mpath href="#arcBot"/></animateMotion></circle>
+        <text class="arc-l" x="450" y="62">pisze i poprawia</text>
+        <text class="arc-l" x="450" y="404">sprawdza: entry · fee · przyszłość</text>
+        <circle class="ai-n claude" cx="160" cy="220" r="92"/>
+        <image href="img/claude.svg" x="124" y="160" width="72" height="72"/>
+        <text class="ai-t c" x="160" y="268">Claude</text>
+        <circle class="ai-n" cx="740" cy="220" r="92"/>
+        <image href="img/openai.svg" x="706" y="160" width="68" height="68"/>
+        <text class="ai-t" x="740" y="268">Codex</text>
+        <g class="doc" transform="translate(410,170)">
+          <path d="M0,0 h58 l22,22 v78 h-80 z"/><path class="fold" d="M58,0 v22 h22"/>
+          <path class="ln" d="M14,44 h52 M14,60 h52 M14,76 h36"/>
+        </g>
+        <text class="doc-t" x="450" y="300">tester.js</text>
+      </svg>
+    </div>
+    <div class="xai-side r" style="--i:3">
+      <div class="top-model">
+        <div class="lbl-up">Model</div>
+        <div class="v">Zawsze najwyższy</div>
+        <div class="d">i najwyższy poziom myślenia. Liczymy pieniądze — tu nie oszczędzamy.</div>
+      </div>
+      <ul class="pc">
+        <li class="ok"><b>Claude pisze</b> — Codex sprawdza</li>
+        <li class="ok"><b>Codex poprawia</b> — Claude sprawdza</li>
+        <li class="ok"><b>Różne wyniki?</b> Szukamy błędu, zanim zaufamy</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ask r" style="--i:4">
+    <span>Prompt do drugiej AI:</span>
+    <span class="q">„Sprawdź ten tester: czy entry jest po OPEN świecy po zamknięciu sygnału, czy liczy fee i poślizg i czy nigdzie nie używa świec z przyszłości. Pokaż 5 transakcji z numerami świec.”</span>
+  </div>
+  <aside class="notes"><ul>
+    <li>Do testów i liczenia pieniędzy polecam Claude'a i Codexa naraz — tak, żeby sprawdzały się nawzajem. Jedna pisze, druga szuka błędów.</li>
+    <li>Każda AI ma swoje ślepe plamki. Ta sama pomyłka u dwóch różnych modeli zdarza się dużo rzadziej.</li>
+    <li>Tu używamy najwyższych modeli i najwyższego poziomu myślenia. Taniej = więcej błędów w miejscach, których nie widać.</li>
+    <li>Prompt na slajdzie wklejamy drugiej AI razem z kodem testera. Prosimy o konkretne transakcje z numerami świec — wtedy sprawdzamy to linią z poprzedniego slajdu.</li>
+  </ul></aside>
+</section>
+
+<!-- 12 · KONIEC -->
+<section class="slide end-slide" data-title="Pytania i co dalej">
+  <div class="kicker r" style="--i:0">Koniec lekcji 2</div>
+  <h1 class="r" style="--i:1">Pytania?</h1>
+  <div class="next r" style="--i:2">
+    <div class="next-h">Na kolejnych lekcjach — rzeczy, których żaden user nie zauważy, a muszą być w 100% poprawne</div>
+    <div class="next-grid">
+      <span>Luki w świecach</span>
+      <span>Świeca w trakcie ≠ zamknięta</span>
+      <span>Zamknięcie dnia w UTC</span>
+      <span>Zegar komputera ≠ zegar giełdy</span>
+      <span>Zerwany WebSocket</span>
+      <span>Fee i poślizg na żywo</span>
+    </div>
+    <div class="start-line">…i zaczynamy budować <span class="mono gold">gielda-klubowa/</span></div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Reszta rzeczy, których żaden user nie zauważy, a muszą być zrobione w 100% poprawnie — będzie na kolejnych lekcjach.</li>
+    <li>Przykłady: luki po wyłączeniu serwera, świeca w trakcie vs zamknięta, zamknięcie dnia w UTC, zegar komputera inny niż zegar giełdy, ponowne łączenie WebSocketu, prawdziwe fee i poślizg.</li>
+    <li>Przy okazji zaczniemy pomału tworzyć naszą platformę — folder giełdy klubowej już jest.</li>
+  </ul></aside>
+</section>
+
+<!-- /SLAJDY -->
+
+</div>
+</div>
+
+<div class="notes-panel" id="notesPanel"></div>
+<div class="help" id="help">← → / spacja · F pełny ekran · N notatki · P widok prowadzącego</div>
+
+<div class="pv" id="pv">
+  <div>
+    <div class="pv-now" id="pvNow"></div>
+    <div class="pv-title" id="pvTitle"></div>
+    <div class="pv-notes" id="pvNotes"></div>
+  </div>
+  <div class="pv-side">
+    <div class="pv-clock" id="pvClock">00:00<small>czas lekcji</small></div>
+    <div class="pv-btns"><button id="pvPrev">← Wstecz</button><button id="pvNext">Dalej →</button></div>
+    <div class="pv-next" id="pvNextT"></div>
+    <div class="pv-btns"><button id="pvReset">Zeruj czas</button></div>
+  </div>
+</div>
+
+<script src="deck.js"></script>
+<script src="lekcja2.js"></script>
+</body>
+</html>

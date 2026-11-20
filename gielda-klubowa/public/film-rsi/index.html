@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jak działa wskaźnik RSI — film</title>
+<link rel="stylesheet" href="../film/film.css">
+<style>
+:root { --mid: #a374ff; }
+.rsi-panel { position: relative; width: 1560px; height: 560px; padding: 20px 110px 20px 24px; }
+.rsi-panel svg, .zoom svg, .mini svg { width: 100%; height: 100%; overflow: visible; }
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.scene.on .draw { animation: draw calc(var(--T) * .42s) ease-in-out both; animation-delay: calc(var(--d, 0) * var(--T) * 1s); }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.fz { opacity: 0; }
+.scene.on .fz { animation: show .7s both; animation-delay: calc(var(--d, .5) * var(--T) * 1s); }
+@keyframes show { to { opacity: 1; } }
+.ax { position: absolute; right: 18px; font: 24px var(--mono); }
+.rsi-panel .chips { left: auto; right: 130px; top: 26px; }
+.chip.hi { color: var(--down); border-color: rgba(229,83,75,.5); }
+.chip.lo { color: var(--up); border-color: rgba(47,191,143,.5); }
+
+/* 2 · backend / front */
+.split { display: grid; grid-template-columns: 1fr 180px 1fr; align-items: center; width: 100%; }
+.side-box { padding: 30px 34px; }
+.side-box .hd { display: flex; align-items: center; gap: 18px; font-size: 34px; font-weight: 800; margin-bottom: 20px; }
+.side-box .hd img { width: 56px; height: 56px; }
+.row { display: flex; align-items: baseline; gap: 16px; font-size: 28px; padding: 11px 0; border-top: 1px solid #241f14; color: var(--ink-2); }
+.row i { font-style: normal; font-weight: 800; width: 26px; }
+.row.ok i { color: var(--up); } .row.no i { color: var(--down); } .row.no { color: var(--ink-3); }
+.split .mid { text-align: center; font: 600 22px var(--mono); color: var(--gold); }
+.split .mid .flowline { margin: 12px 16px 0; }
+
+/* 3 · pierwsze wczytanie */
+.pipe { display: flex; align-items: center; }
+.tape { width: 330px; padding: 22px 24px; }
+.tape .lb { font-size: 23px; color: var(--ink-3); margin-bottom: 12px; }
+.tape .bar { height: 46px; border-radius: 6px; background: repeating-linear-gradient(90deg, var(--c, #6b5c34) 0 3px, transparent 3px 6px); transform-origin: left; transform: scaleX(0); }
+.scene.on .tape .bar { animation: fill .9s ease-out both; animation-delay: calc(var(--d, 0) * var(--T) * 1s); }
+@keyframes fill { to { transform: scaleX(1); } }
+.tape b { display: block; margin-top: 12px; font-size: 30px; }
+.pipe .flowline { width: 90px; margin: 0 14px; }
+.pipe .blk { width: 290px; height: 230px; }
+.ms { margin-top: 40px; text-align: center; font-size: 34px; color: var(--ink-2); }
+.ms b { color: var(--gold); }
+
+/* 4 · jeden krok */
+.s4r { display: grid; grid-template-columns: 860px 1fr; gap: 60px; align-items: center; width: 100%; }
+.formula { padding: 30px 36px; font: 28px/1.75 var(--mono); color: var(--ink-2); }
+.formula .t { font-family: var(--sans); font-size: 23px; color: var(--ink-3); margin-bottom: 10px; }
+.formula b { color: var(--gold); font-weight: 600; }
+.mini { height: 330px; padding: 20px 24px; position: relative; }
+.mini .dot { transform-box: fill-box; transform-origin: center; }
+.scene.on .mini .dot { animation: pulse 1.1s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.8); } }
+.vs { margin-top: 26px; display: flex; gap: 40px; font-size: 30px; color: var(--ink-2); }
+.vs b { display: block; font-size: 64px; color: var(--gold); font-weight: 800; line-height: 1.1; }
+.vs .old b { color: var(--ink-3); text-decoration: line-through; text-decoration-thickness: 3px; }
+
+/* 5 · rysuje GPU */
+.s5r { display: grid; grid-template-columns: 560px 1fr; gap: 70px; align-items: center; width: 100%; }
+.passes { display: flex; flex-direction: column; gap: 18px; }
+.pass { display: flex; align-items: center; gap: 20px; padding: 20px 26px; font-size: 29px; }
+.pass span { font: 700 26px var(--mono); color: var(--gold); }
+.zoom { height: 470px; padding: 26px 30px; position: relative; }
+.zoom .tag { position: absolute; left: 34px; bottom: 22px; font-size: 25px; color: var(--ink-2); }
+.zoom .tag b { color: var(--gold); }
+
+/* 6 · kolejne wskaźniki */
+.s6r { display: grid; grid-template-columns: 1fr 640px; gap: 70px; align-items: center; width: 100%; }
+.inds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.ind { padding: 22px 24px; font-size: 30px; font-weight: 700; }
+.ind span { display: block; font-size: 20px; font-weight: 400; color: var(--ink-3); margin-top: 6px; }
+.ind.on1 { border-color: var(--gold); color: var(--gold); }
+.srv { padding: 32px 36px; }
+.srv .hd { display: flex; align-items: center; gap: 18px; font-size: 32px; font-weight: 800; margin-bottom: 14px; }
+.srv .hd img { width: 54px; height: 54px; }
+.srv .big { font-size: 66px; font-weight: 800; color: var(--gold); }
+.srv p { font-size: 26px; color: var(--ink-2); line-height: 1.45; margin-top: 8px; }
+.endline { margin-top: 30px; font-size: 34px; font-weight: 800; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- 1 · co pokazuje RSI -->
+<section class="scene">
+  <div class="kick a" style="--d:0">01 · Wskaźnik</div>
+  <h2 class="a" style="--d:.02">RSI — <span class="gold">siła ruchu od 0 do 100</span></h2>
+  <div class="body"><div class="rsi-panel box a" style="--d:.04">
+    <svg data-rsi="150,4" data-d=".1" viewBox="0 0 1420 520" preserveAspectRatio="none"></svg>
+    <span class="ax" style="top:142px;color:var(--down)">70</span>
+    <span class="ax" style="top:250px;color:var(--ink-3)">50</span>
+    <span class="ax" style="top:356px;color:var(--up)">30</span>
+    <div class="chips">
+      <span class="chip hi a" style="--d:.52">powyżej 70 — wykupienie</span>
+      <span class="chip lo a" style="--d:.76">poniżej 30 — wyprzedanie</span>
+    </div>
+  </div></div>
+</section>
+
+<!-- 2 · backend / front -->
+<section class="scene">
+  <div class="kick a" style="--d:0">02 · Kto co robi</div>
+  <h2 class="a" style="--d:.02">Serwer podaje świece, <span class="gold">przeglądarka liczy</span></h2>
+  <div class="body"><div class="split">
+    <div class="side-box box a" style="--d:.06">
+      <div class="hd"><img src="../deck/img/nodejs.svg" alt="">Serwer · Node.js</div>
+      <div class="row ok a" style="--d:.16"><i>✓</i>świece z pliku JSON</div>
+      <div class="row ok a" style="--d:.22"><i>✓</i>dociąganie z Binance</div>
+      <div class="row no a" style="--d:.3"><i>✗</i>wskaźniki — nie liczy wcale</div>
+    </div>
+    <div class="mid a" style="--d:.38">tylko świece<div class="flowline"></div></div>
+    <div class="side-box box a" style="--d:.44">
+      <div class="hd"><img src="../deck/img/rust.svg" alt="">Przeglądarka widza</div>
+      <div class="row ok a" style="--d:.56"><i>✓</i>Rust → WebAssembly liczy RSI</div>
+      <div class="row ok a" style="--d:.66"><i>✓</i>WebGL2 rysuje panel</div>
+      <div class="row ok a" style="--d:.76"><i>✓</i>0 zapytań o wskaźnik do serwera</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 3 · pierwsze wczytanie -->
+<section class="scene">
+  <div class="kick a" style="--d:0">03 · Pierwsze wczytanie</div>
+  <h2 class="a" style="--d:.02">Cała historia <span class="gold">jednym przejściem</span></h2>
+  <div class="body"><div>
+    <div class="pipe">
+      <div class="tape box a" style="--d:.06"><div class="lb">zamknięcia świec</div><div class="bar" style="--d:.1"></div><b>1500 cen</b></div>
+      <div class="flowline a" style="--d:.2"></div>
+      <div class="blk box a" style="--d:.22"><img class="ic" src="../deck/img/rust.svg" alt=""><b>Rust · WASM</b><span>jedno przejście</span></div>
+      <div class="flowline a" style="--d:.36"></div>
+      <div class="tape box a" style="--d:.38"><div class="lb">wartości RSI</div><div class="bar" style="--d:.42;--c:#a374ff"></div><b>1500 liczb</b></div>
+      <div class="flowline a" style="--d:.6"></div>
+      <div class="blk box a" style="--d:.62"><svg viewBox="0 0 100 100" style="width:72px;height:72px"><g stroke="#6b5c34" stroke-width="3"><path d="M30 8v10M50 8v10M70 8v10M30 82v10M50 82v10M70 82v10M8 30h10M8 50h10M8 70h10M82 30h10M82 50h10M82 70h10"/></g><rect x="18" y="18" width="64" height="64" rx="6" fill="#14120d" stroke="#dfbd68" stroke-width="2.5"/><text x="50" y="57" text-anchor="middle" font-size="17" font-weight="700" fill="#dfbd68" stroke="none" font-family="Segoe UI">GPU</text></svg><b>Karta graficzna</b><span>bufor z wynikami</span></div>
+    </div>
+    <div class="ms a" style="--d:.72">liczenie: <b>ułamek milisekundy</b> · wskaźnik pojawia się <b>razem ze świecami</b></div>
+  </div></div>
+</section>
+
+<!-- 4 · na żywo: jeden krok -->
+<section class="scene">
+  <div class="kick a" style="--d:0">04 · Na żywo</div>
+  <h2 class="a" style="--d:.02">Nowa świeca = <span class="gold">jeden krok</span></h2>
+  <div class="body"><div class="s4r">
+    <div>
+      <div class="formula box a" style="--d:.2">
+        <div class="t">Rust pamięta dwie średnie (wzór Wildera, okres 14)</div>
+        <b>wzrost</b> = (wzrost × 13 + nowy wzrost) / 14<br>
+        <b>spadek</b> = (spadek × 13 + nowy spadek) / 14<br>
+        <b>RSI</b> = 100 − 100 / (1 + wzrost / spadek)
+      </div>
+      <div class="vs">
+        <div class="old a" style="--d:.55"><b>1500</b>kroków od nowa</div>
+        <div class="a" style="--d:.62"><b>1</b>krok i 1 liczba do karty</div>
+      </div>
+    </div>
+    <div class="mini box a" style="--d:.06"><svg data-rsi="60,9" data-live="1" data-d="0" viewBox="0 0 600 290" preserveAspectRatio="none"></svg></div>
+  </div></div>
+</section>
+
+<!-- 5 · rysuje karta graficzna -->
+<section class="scene">
+  <div class="kick a" style="--d:0">05 · WebGL2</div>
+  <h2 class="a" style="--d:.02">Kolor wybiera <span class="gold">shader, piksel po pikselu</span></h2>
+  <div class="body"><div class="s5r">
+    <div class="passes">
+      <div class="pass box a" style="--d:.16"><span>1</span>tło i poziomy 70 / 30</div>
+      <div class="pass box a" style="--d:.3"><span>2</span>wypełnienie stref</div>
+      <div class="pass box a" style="--d:.42"><span>3</span>linia RSI</div>
+    </div>
+    <div class="zoom box a" style="--d:.5">
+      <svg viewBox="0 0 900 360" preserveAspectRatio="none">
+        <defs><clipPath id="zHi"><rect x="0" y="-50" width="900" height="200"/></clipPath><clipPath id="zMid"><rect x="0" y="150" width="900" height="260"/></clipPath></defs>
+        <rect x="0" y="0" width="900" height="150" fill="#e5534b" opacity=".07"/>
+        <line x1="0" x2="900" y1="150" y2="150" stroke="#e5534b" stroke-width="2" opacity=".7"/>
+        <path class="fz" style="--d:.6" clip-path="url(#zHi)" d="M0,320 C220,300 320,40 470,28 C600,18 680,250 900,300 L900,150 L0,150 Z" fill="#e5534b" opacity=".3"/>
+        <path class="draw" style="--d:.55" pathLength="1" clip-path="url(#zMid)" d="M0,320 C220,300 320,40 470,28 C600,18 680,250 900,300" fill="none" stroke="#a374ff" stroke-width="7" stroke-linecap="round"/>
+        <path class="draw" style="--d:.55" pathLength="1" clip-path="url(#zHi)" d="M0,320 C220,300 320,40 470,28 C600,18 680,250 900,300" fill="none" stroke="#e5534b" stroke-width="7" stroke-linecap="round"/>
+      </svg>
+      <div class="tag a" style="--d:.72">kolor zmienia się <b>dokładnie na przecięciu 70</b></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 6 · kolejne wskaźniki -->
+<section class="scene">
+  <div class="kick a" style="--d:0">06 · Dalej</div>
+  <h2 class="a" style="--d:.02">Kolejne wskaźniki — <span class="gold">ten sam schemat</span></h2>
+  <div class="body"><div class="s6r">
+    <div>
+      <div class="inds">
+        <div class="ind box on1 a" style="--d:.06">RSI ✓<span>gotowy</span></div>
+        <div class="ind box a" style="--d:.14">EMA<span>1 funkcja + 1 panel</span></div>
+        <div class="ind box a" style="--d:.2">MACD<span>1 funkcja + 1 panel</span></div>
+        <div class="ind box a" style="--d:.26">Bollinger<span>1 funkcja + 1 panel</span></div>
+        <div class="ind box a" style="--d:.32">Stochastic<span>1 funkcja + 1 panel</span></div>
+        <div class="ind box a" style="--d:.38">ATR<span>1 funkcja + 1 panel</span></div>
+      </div>
+      <div class="endline a" style="--d:.8">świece z pliku → Rust → GPU = <span class="gold">wskaźnik od razu</span></div>
+    </div>
+    <div class="srv box a" style="--d:.5">
+      <div class="hd"><img src="../deck/img/nodejs.svg" alt="">Serwer</div>
+      <div class="big">0%</div>
+      <p>pracy na wskaźniki — bez zmian przy każdym nowym</p>
+      <p><b class="gold">100 widzów = 100 komputerów</b>, które liczą same</p>
+    </div>
+  </div></div>
+</section>
+
+<div class="cap" id="cap"></div>
+<div class="ctl">
+  <button id="play" title="Odtwórz / pauza (spacja)">▶</button>
+  <span class="nm" id="nm"></span>
+  <div class="chap" id="chap"></div>
+  <span class="tm" id="tm">0:00 / 0:00</span>
+</div>
+<div class="cover" id="cover"><div class="pl"></div><h1>Jak działa <span class="gold">wskaźnik RSI</span></h1><p>film z lektorem · ok. 1:18 · kliknij, aby odtworzyć</p></div>
+</div>
+
+<script>
+// Panele RSI do ilustracji: stały los, strefy i linia kolorowane jak w prawdziwym panelu (klipy SVG).
+(function () {
+  var HI = '#e5534b', LO = '#2fbf8f', MID = '#a374ff';
+  function rng(seed) { return function () { seed = seed * 16807 % 2147483647; return seed / 2147483647; }; }
+  Array.prototype.forEach.call(document.querySelectorAll('svg[data-rsi]'), function (svg, k) {
+    var spec = svg.dataset.rsi.split(','), n = +spec[0], r = rng(+spec[1] * 7919 + 11);
+    var vb = svg.viewBox.baseVal, w = vb.width, h = vb.height, v = 50, vals = [];
+    for (var i = 0; i < n; i++) {
+      v += (r() - 0.5) * 9 + Math.sin(i / 9) * 2.6 + (50 - v) * 0.04;
+      v = Math.max(8, Math.min(92, v));
+      vals.push(v);
+    }
+    var y = function (x) { return (100 - x) / 100 * h; };
+    var pts = vals.map(function (x, i) { return (i * w / (n - 1)).toFixed(1) + ',' + y(x).toFixed(1); });
+    var line = 'M' + pts.join(' L');
+    var y70 = y(70), y30 = y(30), y50 = y(50), id = 'r' + k, d = svg.dataset.d || '.1';
+    var html = '<defs><clipPath id="' + id + 'h"><rect x="0" y="-20" width="' + w + '" height="' + (y70 + 20) + '"/></clipPath>' +
+      '<clipPath id="' + id + 'm"><rect x="0" y="' + y70 + '" width="' + w + '" height="' + (y30 - y70) + '"/></clipPath>' +
+      '<clipPath id="' + id + 'l"><rect x="0" y="' + y30 + '" width="' + w + '" height="' + (h - y30 + 20) + '"/></clipPath></defs>' +
+      '<rect x="0" y="0" width="' + w + '" height="' + y70 + '" fill="' + HI + '" opacity=".07"/>' +
+      '<rect x="0" y="' + y30 + '" width="' + w + '" height="' + (h - y30) + '" fill="' + LO + '" opacity=".07"/>' +
+      '<line x1="0" x2="' + w + '" y1="' + y70 + '" y2="' + y70 + '" stroke="' + HI + '" stroke-width="2" opacity=".6"/>' +
+      '<line x1="0" x2="' + w + '" y1="' + y30 + '" y2="' + y30 + '" stroke="' + LO + '" stroke-width="2" opacity=".6"/>' +
+      '<line x1="0" x2="' + w + '" y1="' + y50 + '" y2="' + y50 + '" stroke="#9d8f6e" stroke-width="1.5" stroke-dasharray="8 8" opacity=".5"/>' +
+      '<path class="fz" style="--d:' + (+d + 0.4) + '" clip-path="url(#' + id + 'h)" d="' + line + ' L' + w + ',' + y70 + ' L0,' + y70 + ' Z" fill="' + HI + '" opacity=".3"/>' +
+      '<path class="fz" style="--d:' + (+d + 0.4) + '" clip-path="url(#' + id + 'l)" d="' + line + ' L' + w + ',' + y30 + ' L0,' + y30 + ' Z" fill="' + LO + '" opacity=".3"/>';
+    [[id + 'h', HI], [id + 'm', MID], [id + 'l', LO]].forEach(function (c) {
+      html += '<path class="draw" style="--d:' + d + '" pathLength="1" clip-path="url(#' + c[0] + ')" d="' + line + '" fill="none" stroke="' + c[1] + '" stroke-width="3.5" stroke-linejoin="round"/>';
+    });
+    if (svg.dataset.live) {
+      var last = pts[pts.length - 1].split(',');
+      html += '<circle class="dot" cx="' + last[0] + '" cy="' + last[1] + '" r="7" fill="' + MID + '"/>';
+    }
+    svg.innerHTML = html;
+  });
+})();
+</script>
+<script src="../film/player.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "r1",
+    "title": "Co pokazuje RSI",
+    "cap": "RSI pokazuje siłę ruchu ceny w skali od zera do stu, z ostatnich czternastu świec. Powyżej 70 rynek jest wykupiony — linia robi się czerwona. Poniżej 30 wyprzedany — robi się zielona.",
+    "say": "RSI pokazuje siłę ruchu ceny w skali od zera do stu, z ostatnich czternastu świec. Powyżej siedemdziesięciu rynek jest wykupiony, a linia robi się czerwona. Poniżej trzydziestu jest wyprzedany, a linia robi się zielona."
+  },
+  {
+    "id": "r2",
+    "title": "Backend i front",
+    "cap": "Serwer w Node.js nie liczy wskaźników wcale. Wysyła tylko świece z pliku JSON. RSI liczy przeglądarka widza — w Rust skompilowanym do WebAssembly.",
+    "say": "Serwer w Nołd dżej es nie liczy wskaźników wcale. Wysyła tylko świece z pliku dżejson. RSI liczy przeglądarka widza, w Rast skompilowanym do łeb asembli."
+  },
+  {
+    "id": "r3",
+    "title": "Pierwsze wczytanie",
+    "cap": "Przy pierwszym wczytaniu Rust przelicza całą historię jednym przejściem, w ułamku milisekundy. Wyniki od razu trafiają do pamięci karty graficznej — dlatego wskaźnik pojawia się razem ze świecami.",
+    "say": "Przy pierwszym wczytaniu Rast przelicza całą historię jednym przejściem, w ułamku milisekundy. Wyniki od razu trafiają do pamięci karty graficznej. Dlatego wskaźnik pojawia się razem ze świecami."
+  },
+  {
+    "id": "r4",
+    "title": "Na żywo: jeden krok",
+    "cap": "Na żywo nie liczymy wszystkiego od nowa. Rust pamięta średni wzrost i średni spadek. Nowa świeca to jeden krok wzoru Wildera i jedna liczba wysłana do karty.",
+    "say": "Na żywo nie liczymy wszystkiego od nowa. Rast pamięta średni wzrost i średni spadek. Nowa świeca to jeden krok wzoru Łajldera i jedna liczba wysłana do karty."
+  },
+  {
+    "id": "r5",
+    "title": "Rysuje karta graficzna",
+    "cap": "Rysuje karta graficzna: najpierw tło i poziomy 70 i 30, potem wypełnienie stref, na końcu linia. Kolor wybiera shader dla każdego piksela, więc zmienia się dokładnie na przecięciu poziomu.",
+    "say": "Rysuje karta graficzna. Najpierw tło i poziomy siedemdziesiąt i trzydzieści, potem wypełnienie stref, na końcu linia. Kolor wybiera szejder dla każdego piksela, więc zmienia się dokładnie na przecięciu poziomu."
+  },
+  {
+    "id": "r6",
+    "title": "Kolejne wskaźniki",
+    "cap": "Kolejne wskaźniki dodajemy tak samo: jedna funkcja w Rust i jeden panel WebGL2. Serwer zostaje bez zmian — sto osób to sto komputerów, które liczą same.",
+    "say": "Kolejne wskaźniki dodajemy tak samo: jedna funkcja w Rast i jeden panel łeb dżi el dwa. Serwer zostaje bez zmian. Sto osób to sto komputerów, które liczą same."
+  }
+]

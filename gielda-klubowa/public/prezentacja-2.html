@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giełda Klubowa — lekcja 2</title>
+<link rel="stylesheet" href="deck/deck.css">
+<link rel="stylesheet" href="deck/slides.css">
+</head>
+<body>
+
+<div class="deck">
+<div class="stage" id="stage">
+
+<!-- 1 · POWITANIE + PROMPT -->
+<section class="slide s-hello" data-title="Powitanie i prompt">
+  <div class="hello">
+    <div>
+      <div class="kicker r" style="--i:0">Klub · lekcja 2</div>
+      <h1 class="r" style="--i:1">Witajcie!<br><span class="gold">Dziś jeden prompt<br>= nasza platforma.</span></h1>
+      <p class="lead r" style="--i:2">Strona typu TradingView od pustego folderu.<br>Po prawej prompt, efekt na slajdzie 2.</p>
+      <div class="tech r" style="--i:3">
+        <div class="t"><img src="deck/img/nodejs.svg" alt=""><b>Node.js</b><span>backend</span></div>
+        <div class="t"><img src="deck/img/binance.svg" alt=""><b>Binance</b><span>świece → pliki JSON</span></div>
+        <div class="t"><img src="deck/img/rust.svg" alt=""><b>Rust → WASM</b><span>rysuje w WebGL2</span></div>
+        <div class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v4M7 16v5M17 5v4M17 15v4" /><rect x="4.5" y="7" width="5" height="9" rx="1" /><rect x="14.5" y="9" width="5" height="6" rx="1" class="f" /></svg><b>Gotowa biblioteka</b><span>skale, zoom, przesuwanie</span></div>
+      </div>
+    </div>
+
+    <div class="prompt r" style="--i:2">
+      <div class="prompt-h"><img src="deck/img/claude.svg" alt=""><b>Mój prompt</b><span>Claude Code</span></div>
+      <div class="prompt-b">
+        <p class="r" style="--i:3">Tu masz ścieżkę do folderu — w tym folderze pracujesz:<br><span class="path">C:\Users\huber\Desktop\club\gielda-klubowa</span></p>
+        <p class="r" style="--i:4">Zbuduj mi <em>od zera</em> projekt własnej strony typu <em>TradingView</em>.</p>
+        <p class="r" style="--i:5">Backend: <em>Node.js</em>. Front: <em>Rust w WebGL2</em> — Rust ma działać w przeglądarce.</p>
+        <p class="r" style="--i:6">Wykres na razie półkustomowy: użyj gotowej biblioteki, żeby wszystko od razu działało i nie zjadło tokenów na testy — ale ma działać na 100%.</p>
+        <p class="r" style="--i:7">Wykres w pełni realny: przesuwanie w lewo i w prawo, scroll, przybliżanie i oddalanie, wybór interwału, prawa i dolna skala do przeciągania.</p>
+        <p class="r" style="--i:8">Świece z <em>Binance API</em>, zapis do <em>JSON</em> — każdy interwał w osobnym pliku, żeby było optymalnie.</p>
+        <p class="r meta" style="--i:9">Slajd 1: przywitanie i ten prompt. Slajd 2: nasza platforma.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Przywitanie. Dziś zamiast teorii: jeden prompt i działający efekt.</li>
+    <li>Prompt pisałem tak, jak mówię. Plan ułożyła AI: Node pobiera świece z Binance i zapisuje do JSON, Rust rysuje świece w WebGL2, gotowa biblioteka daje skale i obsługę myszy.</li>
+    <li>Dlaczego półkustomowy: gotowa biblioteka = osie, zoom i przeciąganie działają od razu, nie palimy tokenów na testy. Świece już rysuje nasz Rust — następny krok to własne osie.</li>
+  </ul></aside>
+</section>
+
+<!-- 2 · PLATFORMA NA ŻYWO → klik: w dół „jak to działa” (tokeny + film) -->
+<section class="slide s-app" data-title="Nasza platforma — na żywo" data-steps="2">
+  <div class="vstack">
+
+    <div class="vpage">
+      <div class="app-head">
+        <div>
+          <div class="kicker r" style="--i:0">Efekt promptu · działa na żywo</div>
+          <h2 class="r" style="--i:1">Giełda Klubowa</h2>
+        </div>
+        <div class="flow r" style="--i:2">
+          <span><img src="deck/img/binance.svg" alt="">Binance</span><i>→</i>
+          <span><img src="deck/img/nodejs.svg" alt="">Node.js · <code>data/BTCUSDT/1h.json</code></span><i>→</i>
+          <span><img src="deck/img/rust.svg" alt="">Rust · WebGL2</span>
+          <a class="open" href="app" target="_blank" rel="noopener">otwórz osobno ↗</a>
+          <button class="nav-btn" data-go="next">Wskaźniki RSI →</button>
+        </div>
+      </div>
+      <div class="app-slot" data-frame="app" data-step="0" data-noclick>
+        <div class="slot-msg">Platforma działa przez serwer:<br>uruchom <b>START.cmd</b> i otwórz <b>http://127.0.0.1:3400/</b></div>
+      </div>
+      <button class="down-hint" data-go="down">↓ jak to działa — film</button>
+    </div>
+
+    <div class="vpage">
+      <div class="app-head">
+        <div>
+          <div class="kicker">Pod spodem · pierwszy prompt</div>
+          <h2>Prompt, koszt <span class="gold">i jak działa</span></h2>
+        </div>
+        <div class="flow">
+          <a class="open" href="film/" target="_blank" rel="noopener">film osobno ↗</a>
+          <button class="nav-btn" data-go="up">↑ platforma</button>
+          <button class="nav-btn" data-go="next">Wskaźniki RSI →</button>
+        </div>
+      </div>
+      <div class="how-rsi">
+        <div class="rp">
+          <div class="rp-h"><img src="deck/img/claude.svg" alt=""><b>Mój pierwszy prompt</b><span>Claude Code</span></div>
+          <div class="rp-b">
+            <p>Tu masz ścieżkę do folderu — w tym folderze pracujesz: <span class="path">C:\Users\huber\Desktop\club\gielda-klubowa</span></p>
+            <p>Zbuduj mi <mark>od zera</mark> projekt własnej strony typu <mark>TradingView</mark>.</p>
+            <p>Backend: <mark>Node.js</mark>. Front: <mark>Rust w WebGL2</mark> — Rust ma działać <mark>w przeglądarce</mark>.</p>
+            <p>Wykres na razie półkustomowy: użyj <mark>gotowej biblioteki</mark>, żeby wszystko od razu działało i <mark>nie zjadło tokenów na testy</mark> — ale ma działać <mark>na 100%</mark>.</p>
+            <p>Wykres w pełni realny: <mark>przesuwanie</mark> w lewo i w prawo, <mark>scroll, przybliżanie i oddalanie</mark>, <mark>wybór interwału</mark>, <mark>prawa i dolna skala do przeciągania</mark>.</p>
+            <p>Świece z <mark>Binance API</mark>, zapis do <mark>JSON</mark> — <mark>każdy interwał w osobnym pliku</mark>, żeby było optymalnie.</p>
+          </div>
+          <div class="rp-cost">
+            <div class="kh">Ten prompt kosztował · pierwsze zadanie</div>
+            <div class="rc"><div><b>23 min</b><span>pracy AI</span></div><div><b>124 572</b><span>tokenów napisanych</span></div><div><b>7,74 mln</b><span>przeczytanych</span></div><div><b>1 827</b><span>linii w 15 plikach</span></div></div>
+            <div class="rc-n">46 zapytań do modelu · 97,8% przeczytanych z cache · Claude Opus 5.5</div>
+          </div>
+        </div>
+        <div class="film-slot" data-frame="film" data-step="1" data-noclick>
+          <div class="slot-msg">Film: <b>http://127.0.0.1:3400/film/</b></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <aside class="notes"><ul>
+    <li>Pokaż: przeciąganie myszą, kółko = przybliżanie i oddalanie, prawa skala (ciągnij góra/dół, podwójny klik = auto), dolna skala (ciągnij lewo/prawo), interwały, inna para (np. ETHUSDT + Enter).</li>
+    <li>Pasek na dole: plik na serwerze (np. data/BTCUSDT/1h.json), ile w nim świec i ile waży. Przewiń w lewo → serwer dociąga starszą historię z Binance i dopisuje do pliku. Po prawej: ile świec narysował Rust i w jakim czasie.</li>
+    <li>Kolejne kliknięcie: widok zjeżdża w dół — mój pierwszy prompt ze słowami klucz na złoto, pod nim ile kosztował, obok film z lektorem (startuje sam, spacja w filmie = pauza).</li>
+    <li>Słowa klucz: od zera, Node.js, Rust w WebGL2 w przeglądarce, gotowa biblioteka (żeby nie palić tokenów na testy), konkretne funkcje wykresu, Binance + JSON, osobny plik na interwał.</li>
+    <li>Tokeny: 124 tys. napisanych, ale 7,7 mln przeczytanych — AI przy każdym kroku czyta całą rozmowę. 97,8% z cache, więc dużo taniej. 23 minuty pracy AI, 1 827 linii w 15 plikach.</li>
+    <li>Kursor w platformie lub filmie zabiera klawisze — strzałki i pilot i tak przełączają slajdy.</li>
+  </ul></aside>
+</section>
+
+<!-- 3 · SILNIK WSKAŹNIKÓW: RSI → klik: w dół prompt + film o wskaźniku -->
+<section class="slide s-app s-ind" data-title="Silnik wskaźników — RSI" data-steps="2">
+  <div class="vstack">
+
+    <div class="vpage">
+      <div class="app-head">
+        <div>
+          <div class="kicker r" style="--i:0">Silnik wskaźników · liczy przeglądarka</div>
+          <h2 class="r" style="--i:1">RSI — <span class="gold">Rust liczy, WebGL2 rysuje</span></h2>
+        </div>
+        <div class="flow r" style="--i:2">
+          <span class="lv hi">powyżej 70 — wykupienie</span>
+          <span class="lv lo">poniżej 30 — wyprzedanie</span>
+          <button class="nav-btn" data-go="prev">← platforma</button>
+        </div>
+      </div>
+      <div class="app-slot" data-frame="rsi" data-step="0" data-noclick>
+        <div class="slot-msg">Platforma działa przez serwer:<br>uruchom <b>START.cmd</b> i otwórz <b>http://127.0.0.1:3400/</b></div>
+      </div>
+      <button class="down-hint" data-go="down">↓ prompt i film: jak działa RSI</button>
+    </div>
+
+    <div class="vpage">
+      <div class="app-head">
+        <div>
+          <div class="kicker">Pod spodem · wskaźnik RSI</div>
+          <h2>Prompt i <span class="gold">jak to działa</span></h2>
+        </div>
+        <div class="flow">
+          <a class="open" href="film-rsi/" target="_blank" rel="noopener">film osobno ↗</a>
+          <button class="nav-btn" data-go="up">↑ wykres z RSI</button>
+        </div>
+      </div>
+      <div class="how-rsi">
+        <div class="rp">
+          <div class="rp-h"><img src="deck/img/claude.svg" alt=""><b>Mój prompt na RSI</b><span>Claude Code</span></div>
+          <div class="rp-b">
+            <p>Dodaj <mark>silnik wskaźników</mark> i pierwszy wskaźnik: <mark>RSI</mark>.</p>
+            <p>Pod obecnym wykresem <mark>osobny, mniejszy panel RSI</mark>. <mark>Obecnego wykresu nie ruszaj.</mark></p>
+            <p>Wygląd: <mark>fioletowa linia</mark>, <mark>powyżej 70 czerwona</mark>, <mark>poniżej 30 zielona</mark> — kolor zmienia się po przekroczeniu poziomu.</p>
+            <p>Liczy <mark>przeglądarka: Rust → WebAssembly</mark>, rysuje <mark>WebGL2</mark>. <mark>Serwer nic nie liczy</mark> — tylko podaje świece.</p>
+            <p>Na dole krótko wytłumacz, jak robić wskaźniki optymalnie.</p>
+          </div>
+          <div class="keys">
+            <div class="kh">Dlaczego zadziałało za pierwszym razem</div>
+            <div><b>„obecnego nie ruszaj”</b> — AI dokłada obok i nie psuje tego, co działa</div>
+            <div><b>Rust → WebAssembly, WebGL2</b> — jasny podział: liczy i rysuje przeglądarka</div>
+            <div><b>70 / 30 i trzy kolory</b> — konkretne liczby, zero zgadywania</div>
+            <div><b>osobny panel pod wykresem</b> — wiadomo, gdzie i jak to narysować</div>
+          </div>
+        </div>
+        <div class="film-slot" data-frame="film-rsi" data-step="1" data-noclick>
+          <div class="slot-msg">Film: <b>http://127.0.0.1:3400/film-rsi/</b></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <aside class="notes"><ul>
+    <li>Ten sam wykres, a pod nim panel RSI(14). Linia fioletowa; ponad 70 robi się czerwona (wykupienie), pod 30 zielona (wyprzedanie) — kolor zmienia się dokładnie w miejscu przecięcia poziomu.</li>
+    <li>Najważniejsze: serwer nic nie liczy. Wysyła świece, a wskaźniki liczy przeglądarka w Rust/WASM i rysuje karta graficzna. Więcej osób = więcej komputerów do liczenia, serwer bez zmian.</li>
+    <li>W dół: mój prompt na RSI — słowa klucz na złoto i dlaczego zadziałało za pierwszym razem. Obok film z lektorem (startuje sam): backend vs front, pierwsze wczytanie jednym przejściem, na żywo jeden krok, kolor z shadera.</li>
+    <li>Kolejne wskaźniki dokładamy tym samym schematem — jedna funkcja w Rust i jeden panel.</li>
+  </ul></aside>
+</section>
+
+<!-- 4 · NOWY CZAT = MNIEJ TOKENÓW -->
+<section class="slide s-tok" data-title="Nowy czat — oszczędzanie tokenów">
+  <div class="kicker r" style="--i:0">Oszczędzanie tokenów · nowa konsola Claude Code</div>
+  <h2 class="r" style="--i:1">Główna część gotowa? <span class="gold">Nowy czat.</span></h2>
+  <div class="tok">
+    <div class="tok-chart r" style="--i:2">
+      <div class="tc-h"><b>Ile czyta AI przy każdym kroku</b><span>cała rozmowa od nowa · pole = tokeny przeczytane w prompcie</span></div>
+      <svg id="tokChart" viewBox="0 0 1640 452" aria-label="Kontekst na zapytanie: stary czat, nowy czat i symulacja"></svg>
+    </div>
+    <div class="tok-row">
+      <div class="tt r" style="--i:3">
+        <div class="tt-h">Stary czat · 4 prompty</div>
+        <div class="tt-n"><div><b>54 min</b><span>pracy AI · 100 zapytań</span></div><div><b>26,8 mln</b><span>przeczytanych</span></div><div><b>310 tys.</b><span>napisanych</span></div></div>
+      </div>
+      <div class="tt new r" style="--i:4">
+        <div class="tt-h"><img src="deck/img/claude.svg" alt="">Nowy czat · slajdy 4–6</div>
+        <div class="tt-n"><div><b>15,6 min</b><span>pracy AI · 55 zapytań</span></div><div><b>8,6 mln</b><span>przeczytanych</span></div><div><b>70 tys.</b><span>napisanych</span></div></div>
+      </div>
+      <div class="tt sim r" style="--i:5">
+        <div class="tt-h">Gdybym został w starym czacie</div>
+        <div class="tt-n"><div><b>30,8 mln</b><span>przeczytanych (symulacja)</span></div><div><b>3,6×</b><span>więcej niż nowy czat</span></div><div><b>≈ 22 mln</b><span>zaoszczędzone</span></div></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Tamten czat dalej jest otwarty, ale do kolejnych rzeczy otworzyłem nową konsolę Claude Code.</li>
+    <li>Dlaczego: przy każdym kroku AI czyta całą rozmowę od nowa. Stary czat: na starcie 54 tys. tokenów, na końcu 456 tys. na jeden krok.</li>
+    <li>Pole pod linią = ile tokenów przeczytał dany prompt. Ostatnia, mała poprawka (6,8 min) przeczytała 6,5 mln — prawie tyle co budowa całej platformy (7,7 mln w 23 min).</li>
+    <li>Nowy czat (ta konsola, slajdy 4–6): zaczął od 52 tys. — ok. 9 razy mniej na pierwszy krok. 15,6 min pracy, 55 zapytań, 8,6 mln przeczytanych.</li>
+    <li>Symulacja: te same 55 kroków doklejone do starej rozmowy (start 456 tys. + ten sam przyrost) = 30,8 mln. Nowy czat przeczytał 3,6 razy mniej, ok. 22 mln tokenów oszczędności.</li>
+    <li>Gdy rozmowa dojdzie do limitu, Claude Code sam ją streszcza (auto-compact) — to dodatkowy koszt, a szczegóły się gubią.</li>
+    <li>Zasada: główną część robię w jednym czacie. Zostały poprawki i nowe rzeczy → nowy czat: mówię, gdzie pracuje i co robimy; sam czyta README i pamięć projektu.</li>
+  </ul></aside>
+</section>
+
+<!-- 5 · DLACZEGO NODE NA SERWERZE + FILM -->
+<section class="slide s-why" data-title="Dlaczego Node.js, a nie Rust ani Python">
+  <div class="app-head">
+    <div>
+      <div class="kicker r" style="--i:0">Technologie · backend</div>
+      <h2 class="r" style="--i:1">Serwer w Node.js — <span class="gold">dlaczego nie Rust?</span></h2>
+    </div>
+    <div class="flow r" style="--i:2">
+      <a class="open" href="film-node/" target="_blank" rel="noopener">film osobno ↗</a>
+    </div>
+  </div>
+  <div class="why">
+    <div class="langs">
+      <div class="lg pick r" style="--i:2">
+        <div class="lg-h"><img src="deck/img/nodejs.svg" alt=""><b>Node.js</b><span>serwer</span></div>
+        <div class="ok">AI pisze szybko i tanio w tokenach</div>
+        <div class="ok">zmiana → restart w sekundę → test przez API</div>
+        <div class="ok">ten sam język co przeglądarka</div>
+      </div>
+      <div class="lg r" style="--i:3">
+        <div class="lg-h"><img src="deck/img/rust.svg" alt=""><b>Rust na serwerze</b></div>
+        <div class="no">więcej poprawek: kompilator, typy, pamięć</div>
+        <div class="no">kompilator nie sprawdzi zapytań do giełdy</div>
+        <div class="no">serwer i tak czeka na sieć: <b>330 ms</b> vs <b>2 ms</b> liczenia</div>
+      </div>
+      <div class="lg r" style="--i:4">
+        <div class="lg-h"><b>Python</b></div>
+        <div class="no">biblioteki i wersje się sypią (lekcja 1)</div>
+      </div>
+      <div class="lg-end r" style="--i:5"><img src="deck/img/rust.svg" alt="">Rust zostaje tam, gdzie liczy: <b>w przeglądarce</b></div>
+    </div>
+    <div class="film-slot" data-frame="film-node" data-noclick>
+      <div class="slot-msg">Film: <b>http://127.0.0.1:3400/film-node/</b></div>
+    </div>
+  </div>
+  <aside class="notes"><ul>
+    <li>Nasz serwer prawie nic nie liczy: pobiera świece z Binance, zapisuje JSON i wysyła. Zmierzyłem: Binance odpowiada po ok. 330 ms, Node przerabia 1000 świec w 2 ms. Rust przyspieszyłby tylko te 2 ms — najwyżej 0,6% zysku.</li>
+    <li>Dla AI Rust jest dużo trudniejszy: surowy kompilator, więcej poprawek i czekania na kompilację = więcej tokenów i minut.</li>
+    <li>Kompilator sprawdza typy, ale nie to, czy dobrze pytamy giełdę (czas w ms, interwał). To i tak trzeba sprawdzić przez sieć — w Node AI restartuje serwer w sekundę i samo wywołuje API.</li>
+    <li>Python też by przeszedł, ale jak w lekcji 1: biblioteki i wersje lubią się wysypać.</li>
+    <li>Rust ma sens tam, gdzie naprawdę liczy — w przeglądarce (świece i wskaźniki w każdej klatce). Na serwer dopiero wtedy, gdy serwer zacznie dużo liczyć.</li>
+  </ul></aside>
+</section>
+
+<!-- 6 · NEWSY Z AI: zapowiedź → ↓ schemat + film → ↓ silnik na żywo -->
+<section class="slide s-app s-news" data-title="Newsy z AI — zapowiedź, schemat, silnik" data-steps="3">
+  <div class="vstack">
+
+    <div class="vpage nx-page">
+      <div class="nx">
+        <div>
+          <div class="kicker r" style="--i:0">Następny krok · zapowiedź</div>
+          <h1 class="r" style="--i:1">AI sama<br><span class="gold">sprawdza newsy.</span></h1>
+          <p class="lead r" style="--i:2">Kolejna część platformy: wiadomości z rynku czyta i ocenia AI — bez naszego klikania.</p>
+        </div>
+        <div class="nx-vis r" style="--i:2" aria-hidden="true">
+          <div class="feed">
+            <div class="nw" style="--k:0"><i></i><span></span><span class="s"></span></div>
+            <div class="nw" style="--k:1"><i></i><span></span><span class="s"></span></div>
+            <div class="nw" style="--k:2"><i></i><span></span><span class="s"></span></div>
+            <div class="nw" style="--k:3"><i></i><span></span><span class="s"></span></div>
+          </div>
+          <div class="nx-flow"></div>
+          <div class="nx-ai"><img src="deck/img/claude.svg" alt=""><b>AI</b><span>czyta i ocenia</span></div>
+          <div class="nx-flow"></div>
+          <div class="nx-out"><b>na wykresie</b><span>znacznik przy świecy</span><svg viewBox="0 0 200 110"><g class="cdl"><path d="M14 30v60M34 40v50M54 25v55M74 45v45M94 20v50M114 10v45M134 18v40M154 8v42M174 4v36" /></g><g><rect x="9" y="45" width="10" height="30" fill="#2fbf8f" /><rect x="29" y="55" width="10" height="20" fill="#e5534b" /><rect x="49" y="35" width="10" height="30" fill="#2fbf8f" /><rect x="69" y="55" width="10" height="20" fill="#e5534b" /><rect x="89" y="30" width="10" height="28" fill="#2fbf8f" /><rect x="109" y="20" width="10" height="22" fill="#2fbf8f" /><rect x="129" y="25" width="10" height="20" fill="#e5534b" /><rect x="149" y="15" width="10" height="22" fill="#2fbf8f" /><rect x="169" y="10" width="10" height="16" fill="#2fbf8f" /></g><circle class="mk" cx="94" cy="12" r="7" /></svg></div>
+        </div>
+      </div>
+      <button class="down-hint" data-go="down">↓ jak to zbudować — schemat i film</button>
+    </div>
+
+    <div class="vpage">
+      <div class="app-head">
+        <div>
+          <div class="kicker">Pod spodem · schemat 1:1 z Privoty</div>
+          <h2>Jak AI <span class="gold">sprawdza newsy</span></h2>
+        </div>
+        <div class="flow">
+          <a class="open" href="film-news/" target="_blank" rel="noopener">film osobno ↗</a>
+          <button class="nav-btn" data-go="up">↑ zapowiedź</button>
+          <button class="nav-btn" data-go="down">↓ silnik na żywo</button>
+        </div>
+      </div>
+      <div class="how-news">
+        <div class="pipe-v">
+          <div class="pp">
+            <div class="pp-h"><i>1</i>Źródła · 20 podmiotów <span>→ kanały: X, strona, RSS</span></div>
+            <div class="pp-src" id="newsSources"></div>
+          </div>
+          <div class="pp-arr"></div>
+          <div class="pp">
+            <div class="pp-h"><i>2</i>Nasz silnik · bez AI</div>
+            <div class="pp-t">jeden news z kilku kanałów = 1 historia · słownik: waga 0–100 · szum odpada, pilne od razu</div>
+          </div>
+          <div class="pp-arr"></div>
+          <div class="pp ai">
+            <div class="pp-h"><i>3</i>Etap 1 · ChatGPT · <b>zawsze ten sam prompt</b></div>
+            <div class="pp-keys"><span>źródło ✓</span><span>waga</span><span>wydźwięk</span><span>teraz / kalendarz</span><span>skrót</span><em>→ tylko JSON</em></div>
+          </div>
+          <div class="pp-split">
+            <div class="pp low">niska / średnia<b>→ od razu na stronę</b></div>
+            <div class="pp high">wysoka / bardzo wysoka<b>→ zapis wątku, np. „Cła USA–Chiny”</b></div>
+          </div>
+          <div class="pp ai">
+            <div class="pp-h"><i>4</i>Etap 2 · <b>wyższe ustawienia + 4 zdjęcia rynku</b></div>
+            <div class="pp-t">BTC · S&amp;P 500 · złoto · ropa → czy na pewno mocny, ile w cenie, czas wpływu, szansa ↑ / ↓</div>
+          </div>
+          <div class="pp-arr"></div>
+          <div class="pp">
+            <div class="pp-h"><i>5</i>Rozliczenie</div>
+            <div class="pp-t">do końca czasu wpływu na żywo: zgadza się? → potem trafione / pudło</div>
+          </div>
+        </div>
+        <div class="film-slot" data-frame="film-news" data-step="1" data-noclick>
+          <div class="slot-msg">Film: <b>http://127.0.0.1:3400/film-news/</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vpage">
+      <div class="app-head">
+        <div>
+          <div class="kicker">Silnik na żywo · prawdziwe newsy z Privoty</div>
+          <h2>Nasz silnik <span class="gold">ocenia news</span></h2>
+        </div>
+        <div class="flow">
+          <span class="eng-file">public/deck/news-engine.js</span>
+          <button class="nav-btn" data-go="up">↑ schemat i film</button>
+        </div>
+      </div>
+      <div class="eng" id="newsDemo" data-noclick>
+        <div class="eng-col">
+          <div class="eng-h">1 · News</div>
+          <div class="eng-pick" id="newsPick"></div>
+          <div class="eng-card" id="newsCard"></div>
+          <div class="eng-gpt" id="newsGpt"></div>
+        </div>
+        <div class="eng-col">
+          <div class="eng-h">2 · Kod silnika <span>reguły, które zadziałały, świecą</span></div>
+          <div class="eng-code" id="newsCode"></div>
+        </div>
+        <div class="eng-col">
+          <div class="eng-h">3 · Wynik <span>ten sam JSON co z ChatGPT</span></div>
+          <pre class="eng-json" id="newsJson"></pre>
+          <div class="eng-route" id="newsRoute"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <aside class="notes"><ul>
+    <li>Zapowiedź: newsy. AI sama sprawdza wiadomości i ocenia je za nas. W Privoty to działa w zakładce News.</li>
+    <li>↓ Schemat 1:1 z Privoty: ok. 20 podmiotów (Trump, Biały Dom, Musk, Fed, banki centralne, serwisy, krypto), każdy z kilkoma kanałami. Nasz silnik bez AI odsiewa szum. Etap 1: ChatGPT zawsze z tym samym promptem, odpowiedź tylko w JSON (źródło, waga, wydźwięk, teraz/kalendarz, skrót). Niska/średnia → od razu na stronę. Wysoka+ → zapis wątku i etap 2: wyższe ustawienia + 4 zdjęcia rynku → czas wpływu i szansa góra/dół. Potem rozliczenie.</li>
+    <li>W Privoty X nie jest podpięty (API X jest płatne) — Trump idzie przez lustro Truth Social, Biały Dom przez 4 kanały RSS. ChatGPT działa tam w przeglądarce na serwerze; u siebie najprościej przez API.</li>
+    <li>Film kończy się ciekawostką „ChatGPT bez API”: Node otwiera okno Chrome, elementy z Ctrl+Shift+I (pole, Wyślij, odpowiedź) dajemy AI w prompcie, jej kod wkleja i czyta odpowiedź — tak działa Privoty. Więcej roboty, selektory psują się przy zmianie strony, a regulamin ChatGPT zabrania automatyzacji (ryzyko blokady konta).</li>
+    <li>↓ Silnik na żywo: 4 prawdziwe newsy z Privoty (17–18.10). Nasz silnik (słownik w kodzie) ocenia je sam, obok prawdziwa odpowiedź ChatGPT z Privoty. „✎ własny” — można wpisać dowolny tekst po angielsku.</li>
+  </ul></aside>
+</section>
+
+<!-- 7 · KONIEC NA DZIŚ + NAD CZYM PRACUJĘ → w dół: lista projektów klubu -->
+<section class="slide s-app s-end" data-title="To wszystko na dziś · wasze projekty" data-steps="2">
+  <div class="vstack">
+
+  <div class="vpage end-page">
+  <div class="endg">
+    <div>
+      <div class="kicker r" style="--i:0">Koniec · lekcja 2</div>
+      <h1 class="r" style="--i:1">To wszystko<br><span class="gold">na dziś.</span></h1>
+      <p class="lead r" style="--i:2">Przepraszam — przez problemy z czasem i z dostępnością AI nie zdążyłem przygotować więcej.</p>
+      <div class="thx r" style="--i:3">Dziękuję! <span>Pytania?</span></div>
+    </div>
+    <div class="work r" style="--i:2">
+      <div class="wk-h">Nad czym teraz pracuję <span>w budowie</span></div>
+      <div class="wk-vs">
+        <div class="wk-old"><b>Dziś: gotowe wskaźniki</b><span>warunki ustalone w kodzie</span><code>if (RSI &gt; 70) sprzedaj</code></div>
+        <i>→</i>
+        <div class="wk-new"><b>Cel: AI z własnym widokiem rynku</b><span>cały czas ocenia rynek, sama rysuje i decyduje</span></div>
+      </div>
+      <div class="wk-chart"><div class="wk-tag">AI sama rysuje Smart Money Concepts</div><svg id="smcChart" viewBox="0 0 960 330" aria-label="Przykład: AI rysuje płynność, order block, FVG i BOS"></svg></div>
+      <div class="wk-steps"><span>widok rynku</span><i>→</i><span>AI rysuje SMC</span><i>→</i><span>analiza</span><i>→</i><span>handel przez API giełdy</span></div>
+    </div>
+  </div>
+  <button class="down-hint" data-go="down">↓ wasze projekty — lista</button>
+  </div>
+
+  <div class="vpage">
+    <div class="app-head">
+      <div>
+        <div class="kicker">Dla was · kolejne lekcje</div>
+        <h2>Jaki projekt mam <span class="gold">zrobić dla was?</span></h2>
+      </div>
+      <div class="flow">
+        <button class="nav-btn" data-go="up">↑ koniec lekcji</button>
+      </div>
+    </div>
+    <div class="pj" data-noclick>
+      <div class="pj-main">
+        <div class="pj-form">
+          <input id="projText" type="text" maxlength="300" placeholder="Nazwa albo opis projektu… (Enter = dodaj)" autocomplete="off">
+          <input id="projWho" type="text" maxlength="60" placeholder="kto zgłasza" autocomplete="off">
+          <button id="projAdd" class="nav-btn">+ Dodaj</button>
+        </div>
+        <ol class="pj-list" id="projList"></ol>
+        <div class="pj-status" id="projStatus"></div>
+      </div>
+      <div class="pj-side">
+        <div class="pj-sh">Przy każdym projekcie pokażę</div>
+        <div class="pj-it"><b>1</b><span><em>Technologie</em> — co wybrać najoptymalniej</span></div>
+        <div class="pj-it"><b>2</b><span><em>Języki</em> — gdzie Node, gdzie Rust, gdzie coś innego</span></div>
+        <div class="pj-it"><b>3</b><span><em>Moje prompty</em> — słowo w słowo, ze słowami klucz</span></div>
+        <div class="pj-it"><b>4</b><span><em>Wykonanie</em> — krok po kroku, z kosztem w tokenach</span></div>
+        <div class="pj-hint">Podwójny klik na pozycji — poprawka · ✕ — usuń</div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <aside class="notes"><ul>
+    <li>To wszystko na dziś. Przepraszam — przez problemy z czasem i z dostępnością AI nie mogłem przygotować więcej.</li>
+    <li>Nad czym pracuję: optymalny system AI, który cały czas ocenia rynek. Zamiast gotowych silników wskaźników z warunkami zapisanymi w kodzie — AI z zapleczem dopasowanym pod siebie i własnym widokiem na rynek.</li>
+    <li>Taka AI sama rysuje Smart Money Concepts (płynność, order block, FVG, BOS), robi z tego analizę i handluje normalnie przez API giełdy. Wykres na slajdzie to przykład — świece ułożone ręcznie, żeby było widać każdy element.</li>
+    <li>Pytania.</li>
+    <li>↓ W dół: lista projektów uczestników — wpisuję na żywo (Enter dodaje, numeracja 1, 2, 3 sama), zapis do data/projekty-klubu.json. Przy każdym pokażę: technologie, języki, moje prompty i wykonanie krok po kroku.</li>
+  </ul></aside>
+</section>
+
+</div>
+</div>
+
+<div class="notes-panel" id="notesPanel"></div>
+<div class="help" id="help">← → slajdy · ↑ ↓ w dół / w górę · spacja / pilot po kolei · F pełny ekran · N notatki · P prowadzący</div>
+
+<div class="pv" id="pv">
+  <div>
+    <div class="pv-now" id="pvNow"></div>
+    <div class="pv-title" id="pvTitle"></div>
+    <div class="pv-notes" id="pvNotes"></div>
+  </div>
+  <div class="pv-side">
+    <div class="pv-clock" id="pvClock">00:00<small>czas lekcji</small></div>
+    <div class="pv-btns"><button id="pvPrev">← Wstecz</button><button id="pvNext">Dalej →</button></div>
+    <div class="pv-next" id="pvNextT"></div>
+    <div class="pv-btns"><button id="pvReset">Zeruj czas</button></div>
+  </div>
+</div>
+
+<script src="deck/deck.js"></script>
+<script src="deck/frames.js"></script>
+<script src="deck/tokens.js"></script>
+<script src="deck/news-engine.js"></script>
+<script src="deck/news-examples.js"></script>
+<script src="deck/news-demo.js"></script>
+<script src="deck/smc.js"></script>
+<script src="deck/projects.js"></script>
+</body>
+</html>

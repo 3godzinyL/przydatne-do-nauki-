@@ -1,0 +1,119 @@
+:root {
+  --bg: #0e0d0a;
+  --bar: #13110c;
+  --line: #2e281a;
+  --line-2: #3a3220;
+  --gold: #dfbd68;
+  --gold-dark: #6b5c34;
+  --ink: #f4efe3;
+  --ink-2: #cfc2a2;
+  --ink-3: #9d8f6e;
+  --up: #2fbf8f;
+  --down: #e5534b;
+  --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 13px/1.3 var(--sans);
+  display: grid;
+  grid-template-rows: 46px 1fr 30px;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.sp { flex: 1; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------- górny pasek ---------- */
+.top {
+  display: flex; align-items: center; gap: 14px;
+  padding: 0 12px; background: var(--bar); border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; color: var(--ink); white-space: nowrap; }
+.brand svg { width: 22px; height: 22px; fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; }
+.brand svg .f { fill: var(--gold); }
+
+.sym input {
+  width: 128px; height: 30px; padding: 0 10px;
+  background: var(--bg); color: var(--ink); border: 1px solid var(--line-2); border-radius: 6px;
+  font: 600 14px var(--sans); letter-spacing: .02em; text-transform: uppercase;
+}
+.sym input:focus { outline: none; border-color: var(--gold); }
+
+.tfs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.tfs button {
+  height: 28px; padding: 0 9px; border-radius: 5px; border: 1px solid transparent;
+  color: var(--ink-2); font-weight: 600; white-space: nowrap;
+}
+.tfs button:hover { color: var(--ink); background: #1c1911; }
+.tfs button.on { color: var(--gold); border-color: var(--gold-dark); }
+
+.live { display: flex; align-items: center; gap: 6px; color: var(--ink-3); white-space: nowrap; }
+.live i { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+.live.on { color: var(--ink-2); }
+.live.on i { background: var(--up); box-shadow: 0 0 0 3px rgba(47,191,143,.18); }
+.src { color: var(--ink-3); white-space: nowrap; }
+
+/* ---------- wykres ---------- */
+.wrap { position: relative; min-height: 0; overflow: hidden; background: var(--bg); }
+#gl { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; }
+.gl-pane { position: absolute; left: 0; z-index: 0; pointer-events: none; }
+#chart { position: absolute; inset: 0; z-index: 1; }
+
+.legend {
+  position: absolute; left: 12px; top: 8px; z-index: 2; pointer-events: none;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
+  font-variant-numeric: tabular-nums; color: var(--ink-2); max-width: calc(100% - 90px);
+}
+.legend .name { color: var(--ink); font-weight: 700; font-size: 15px; }
+.legend .tf { color: var(--ink-3); }
+.legend .k { color: var(--ink-3); margin-right: 3px; }
+.legend .u { color: var(--up); }
+.legend .d { color: var(--down); }
+
+.to-now {
+  position: absolute; z-index: 3; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--bar); border: 1px solid var(--line-2); color: var(--gold);
+  font-size: 17px; line-height: 26px; display: none;
+}
+.to-now.on { display: block; }
+.to-now:hover { border-color: var(--gold); }
+
+.loading {
+  position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); z-index: 4;
+  padding: 8px 16px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--bar);
+  color: var(--ink-2); display: none; pointer-events: none;
+}
+.loading.on { display: block; }
+.toast {
+  position: absolute; left: 50%; bottom: 46px; transform: translateX(-50%); z-index: 5;
+  padding: 8px 14px; border: 1px solid var(--down); border-radius: 8px; background: var(--bar);
+  color: var(--ink); opacity: 0; transition: opacity .2s; pointer-events: none;
+}
+.toast.on { opacity: 1; }
+
+/* ---------- dolny pasek ---------- */
+.status {
+  display: flex; align-items: center; gap: 14px;
+  padding: 0 12px; background: var(--bar); border-top: 1px solid var(--line);
+  color: var(--ink-3); white-space: nowrap; overflow: hidden; font-size: 12px;
+}
+.status #stFile { color: var(--ink-2); font-family: "Cascadia Mono", Consolas, monospace; }
+.status button {
+  height: 22px; padding: 0 9px; border-radius: 5px; border: 1px solid var(--line-2); color: var(--ink-2);
+}
+.status button:hover { border-color: var(--gold-dark); color: var(--ink); }
+.status button.on { color: var(--gold); border-color: var(--gold-dark); }
+#stGl b { color: var(--gold); font-weight: 600; }
+#stLib { color: var(--ink-3); text-decoration: none; font-size: 11px; opacity: .7; }
+#stLib:hover { color: var(--gold); opacity: 1; }
+
+@media (max-width: 720px) {
+  .brand span, .src, #stHist { display: none; }
+  .sym input { width: 104px; }
+}

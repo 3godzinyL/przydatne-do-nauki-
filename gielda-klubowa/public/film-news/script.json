@@ -1,0 +1,50 @@
+[
+  {
+    "id": "w1",
+    "title": "Źródła i kanały",
+    "cap": "Zaczynamy od listy źródeł: około dwudziestu podmiotów, które ruszają rynkiem — Trump, Biały Dom, Elon Musk, Fed, banki centralne, serwisy rynkowe i krypto. Każdy ma kilka kanałów: X albo Truth Social, główną stronę, RSS. Każdy kanał to osobny adres, który serwer odpytuje.",
+    "say": "Zaczynamy od listy źródeł. Około dwudziestu podmiotów, które ruszają rynkiem: Trump, Biały Dom, Elon Musk, Fed, banki centralne, serwisy rynkowe i krypto. Każdy ma kilka kanałów: iks albo Truth Social, główną stronę, er es es. Każdy kanał to osobny adres, który serwer odpytuje."
+  },
+  {
+    "id": "w1n",
+    "title": "Skąd wiemy, że jest nowy news",
+    "cap": "Skąd serwer wie, że pojawił się nowy news? Co 5 sekund sprawdza, które kanały już czas odpytać — Trumpa co minutę, Biały Dom co 3 minuty. Pyta z nagłówkiem „masz coś nowszego?”. Gdy nic się nie zmieniło, dostaje krótkie 304 i nic nie pobiera. Gdy są wpisy, każdy dostaje odcisk z linku i źródła: znany pomijamy, nowy zapisujemy i od razu oceniamy.",
+    "say": "Skąd serwer wie, że pojawił się nowy news? Co pięć sekund sprawdza, które kanały już czas odpytać: Trumpa co minutę, Biały Dom co trzy minuty. Pyta z nagłówkiem: masz coś nowszego? Gdy nic się nie zmieniło, dostaje krótką odpowiedź trzysta cztery i nic nie pobiera. Gdy są wpisy, każdy dostaje odcisk z linku i źródła. Znany odcisk pomijamy, nowy zapisujemy i od razu oceniamy."
+  },
+  {
+    "id": "w2",
+    "title": "Sito bez AI",
+    "cap": "Ta sama wiadomość często przychodzi z kilku kanałów — łączymy ją w jedną historię i zapisujemy, kto był pierwszy. Potem nasz silnik ocenia tekst słownikiem: waga od 0 do 100. Oczywisty szum odpada od razu, pilne idą bez czekania. To oszczędza limity AI.",
+    "say": "Ta sama wiadomość często przychodzi z kilku kanałów. Łączymy ją w jedną historię i zapisujemy, kto był pierwszy. Potem nasz silnik ocenia tekst słownikiem: waga od zera do stu. Oczywisty szum odpada od razu, pilne idą bez czekania. To oszczędza limity AI."
+  },
+  {
+    "id": "w3",
+    "title": "Etap 1: zawsze ten sam prompt",
+    "cap": "Etap pierwszy: ChatGPT dostaje tekst newsa, zawsze z tym samym promptem. Odpowiedź to tylko JSON według wzoru: źródło, waga, wydźwięk od −100 do +100, kierunek BTC, S&P, złota i ropy, czy to dzieje się teraz, czy dopiero w kalendarzu, i krótki opis. Parser sprawdza każde pole.",
+    "say": "Etap pierwszy. ChatGPT dostaje tekst newsa, zawsze z tym samym promptem. Odpowiedź to tylko dżejson według wzoru: źródło, waga, wydźwięk od minus stu do plus stu, kierunek BTC, es en pi, złota i ropy, czy to dzieje się teraz, czy dopiero w kalendarzu, i krótki opis. Parser sprawdza każde pole."
+  },
+  {
+    "id": "w4",
+    "title": "Rozdzielnik",
+    "cap": "Niska i średnia waga to koniec — news od razu trafia na stronę. Wysoka i bardzo wysoka idzie dalej: zapisujemy go pod nazwą wątku, na przykład „Cła USA–Chiny”, żeby kolejne newsy z tej sprawy wracały do tej samej rozmowy z AI.",
+    "say": "Niska i średnia waga to koniec. News od razu trafia na stronę. Wysoka i bardzo wysoka idzie dalej: zapisujemy go pod nazwą wątku, na przykład: cła USA, Chiny. Dzięki temu kolejne newsy z tej sprawy wracają do tej samej rozmowy z AI."
+  },
+  {
+    "id": "w5",
+    "title": "Etap 2: zdjęcia rynku",
+    "cap": "Etap drugi, na wyższych ustawieniach. Sam tekst nie mówi, jak rynek naprawdę zareaguje. Dlatego dokładamy cztery zdjęcia rynku: BTC, S&P 500, złoto i ropę. Na nich AI widzi, czy rynek już zareagował, w jakim jest trendzie i ile newsa jest już w cenie — i lepiej ocenia, czy news naprawdę zadziała, jak długo i w którą stronę.",
+    "say": "Etap drugi, na wyższych ustawieniach. Sam tekst nie mówi, jak rynek naprawdę zareaguje. Dlatego dokładamy cztery zdjęcia rynku: BTC, es en pi pięćset, złoto i ropę. Na nich AI widzi, czy rynek już zareagował, w jakim jest trendzie i ile newsa jest już w cenie. Dzięki temu lepiej ocenia, czy news naprawdę zadziała, jak długo i w którą stronę."
+  },
+  {
+    "id": "w6",
+    "title": "Rozliczenie i jak zrobić u siebie",
+    "cap": "Na koniec system sam się rozlicza: do końca czasu wpływu pokazuje na żywo, czy rynek się zgadza, potem zapisuje trafienie albo pudło. U siebie zrobicie to tak samo: Node pobiera źródła, model AI przez API zwraca JSON, wynik ląduje w pliku i na stronie.",
+    "say": "Na koniec system sam się rozlicza. Do końca czasu wpływu pokazuje na żywo, czy rynek się zgadza, potem zapisuje trafienie albo pudło. U siebie zrobicie to tak samo: Nołd pobiera źródła, model AI przez ej pi aj zwraca dżejson, a wynik ląduje w pliku i na stronie."
+  },
+  {
+    "id": "w8",
+    "title": "Ciekawostka: ChatGPT bez API",
+    "cap": "Ciekawostka: nie każda strona ma API, a API ChatGPT jest płatne. Node otwiera okno Chrome, przez Ctrl+Shift+I bierzemy nazwy elementów strony i dajemy je AI w prompcie — jej kod wkleja, klika i czyta odpowiedź. Więcej roboty i wbrew regulaminowi: ryzyko blokady konta.",
+    "say": "Ciekawostka na koniec. Nie każda strona ma ej pi aj, a za ej pi aj czata GPT płaci się osobno. Obejście: Nołd otwiera zwykłe okno Chrome. Przez kontrol, szift, i, podglądamy elementy strony: pole wiadomości, przycisk wyślij, odpowiedź. Ich nazwy i znaczenie dajemy AI w prompcie, a ona pisze kod, który wkleja tekst, klika i czyta odpowiedź, jak człowiek. Tak samo ze stronami newsów bez er es es. To więcej roboty i niezgodne z regulaminem czata GPT, więc konto może dostać blokadę."
+  }
+]
